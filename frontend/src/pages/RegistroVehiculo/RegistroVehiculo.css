@@ -1,0 +1,139 @@
+.registro-container{
+
+    color:white;
+
+}
+
+.registro-container h1{
+
+    margin-bottom:25px;
+
+}
+
+.registro-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:20px;
+
+}
+
+.card{
+
+    background:#1E293B;
+
+    border-radius:12px;
+
+    padding:25px;
+
+    border:1px solid #334155;
+
+}
+
+.grande{
+
+    min-height:320px;
+
+}
+
+.card h2{
+
+    margin-bottom:20px;
+
+    color:#F97316;
+
+}
+
+.grid-form{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+
+}
+
+.campo{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.campo label{
+
+    margin-bottom:8px;
+
+    color:#CBD5E1;
+
+}
+
+.campo input{
+
+    background:#0F172A;
+
+    border:1px solid #475569;
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:8px;
+
+}
+
+textarea{
+
+    width:100%;
+
+    background:#0F172A;
+
+    color:white;
+
+    border:1px solid #475569;
+
+    border-radius:8px;
+
+    padding:15px;
+
+    resize:none;
+
+}
+
+.resumen{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.btn-registrar{
+
+    background:#F97316;
+
+    color:white;
+
+    border:none;
+
+    padding:15px;
+
+    border-radius:8px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+}
+
+.btn-registrar:hover{
+
+    background:#ea580c;
+
+}

@@ -1,0 +1,34 @@
+.header{
+
+    height:70px;
+
+    background:#1E293B;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 30px;
+
+    border-bottom:1px solid #334155;
+
+}
+
+.usuario{
+
+    display:flex;
+
+    flex-direction:column;
+
+    text-align:right;
+
+}
+
+.usuario span{
+
+    color:#94A3B8;
+    font-size:13px;
+
+}
