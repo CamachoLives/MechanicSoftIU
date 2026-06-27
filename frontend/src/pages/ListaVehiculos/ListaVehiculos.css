@@ -1,0 +1,83 @@
+.lista{
+
+    color:white;
+
+}
+
+.buscar{
+
+    width:350px;
+
+    padding:12px;
+
+    margin:25px 0;
+
+    background:#1E293B;
+
+    border:none;
+
+    color:white;
+
+    border-radius:8px;
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:#1E293B;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+}
+
+thead{
+
+    background:#F97316;
+
+}
+
+th{
+
+    padding:15px;
+
+    text-align:left;
+
+}
+
+td{
+
+    padding:15px;
+
+    border-bottom:1px solid #334155;
+
+}
+
+tbody tr:hover{
+
+    background:#334155;
+
+}
+
+td button{
+
+    margin-right:10px;
+
+    background:#2563EB;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 15px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+}
