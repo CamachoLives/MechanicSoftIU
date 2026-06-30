@@ -152,8 +152,8 @@ export default function ListaVehiculos() {
                                 <td>{vehiculo.modelo}</td>
                                 <td>{vehiculo.color}</td>
                                 <td>{vehiculo.kilometraje}</td>
-                                <td>{vehiculo.propietarioActual}</td>
-                                <td>{vehiculo.telefonoActual}</td>
+                                <td>{vehiculo.cliente?.nombre}</td>
+                                <td>{vehiculo.cliente?.telefono}</td>
                                 <td>
                                     {vehiculo.createdAt
                                         ? new Date(vehiculo.createdAt).toLocaleDateString()

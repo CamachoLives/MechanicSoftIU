@@ -11,16 +11,38 @@ export default function RegistroVehiculo() {
         color: "",
         kilometraje: "",
         cilindrajeCc: "",
-        propietarioActual: "",
-        telefonoActual: "",
-        motivoIngreso: ""
+        motivoIngreso: "",
+
+        cliente: {
+            nombre: "",
+            telefono: "",
+            correo: ""
+        }
     });
 
     const cambiarValor = (e) => {
-        setVehiculo({
-            ...vehiculo,
-            [e.target.name]: e.target.value
-        });
+
+        const { name, value } = e.target;
+
+        if (["nombre", "telefono", "correo"].includes(name)) {
+
+            setVehiculo({
+                ...vehiculo,
+                cliente: {
+                    ...vehiculo.cliente,
+                    [name]: value
+                }
+            });
+
+        } else {
+
+            setVehiculo({
+                ...vehiculo,
+                [name]: value
+            });
+
+        }
+
     };
 
     const registrar = async (e) => {
@@ -34,26 +56,31 @@ export default function RegistroVehiculo() {
             alert("✅ Vehículo registrado correctamente.");
 
             setVehiculo({
+
                 placa: "",
                 marca: "",
                 modelo: "",
                 color: "",
                 kilometraje: "",
                 cilindrajeCc: "",
-                propietarioActual: "",
-                telefonoActual: "",
-                motivoIngreso: ""
+                motivoIngreso: "",
+
+                cliente: {
+                    nombre: "",
+                    telefono: "",
+                    correo: ""
+                }
+
             });
 
-        } catch (error) {console.error("Error completo:", error);
+        } catch (error) {
 
-            console.error("Respuesta:", error.response);
-
-            console.error("Datos:", error.response?.data);
+            console.error(error);
 
             alert("Ocurrió un error al registrar el vehículo.");
 
         }
+
     };
 
     return (
@@ -64,9 +91,11 @@ export default function RegistroVehiculo() {
 
             <form onSubmit={registrar} className="registro-grid">
 
+                {/* DATOS DEL VEHÍCULO */}
+
                 <div className="card grande">
 
-                    <h2>Datos de la Motocicleta</h2>
+                    <h2>Datos del Vehículo</h2>
 
                     <div className="grid-form">
 
@@ -77,7 +106,6 @@ export default function RegistroVehiculo() {
                                 name="placa"
                                 value={vehiculo.placa}
                                 onChange={cambiarValor}
-                                placeholder="ABC123"
                                 required
                             />
                         </div>
@@ -89,7 +117,6 @@ export default function RegistroVehiculo() {
                                 name="marca"
                                 value={vehiculo.marca}
                                 onChange={cambiarValor}
-                                placeholder="Yamaha"
                                 required
                             />
                         </div>
@@ -101,7 +128,6 @@ export default function RegistroVehiculo() {
                                 name="modelo"
                                 value={vehiculo.modelo}
                                 onChange={cambiarValor}
-                                placeholder="FZ 16"
                                 required
                             />
                         </div>
@@ -113,7 +139,6 @@ export default function RegistroVehiculo() {
                                 name="color"
                                 value={vehiculo.color}
                                 onChange={cambiarValor}
-                                placeholder="Negro"
                                 required
                             />
                         </div>
@@ -125,7 +150,6 @@ export default function RegistroVehiculo() {
                                 name="kilometraje"
                                 value={vehiculo.kilometraje}
                                 onChange={cambiarValor}
-                                placeholder="15000"
                                 required
                             />
                         </div>
@@ -137,7 +161,6 @@ export default function RegistroVehiculo() {
                                 name="cilindrajeCc"
                                 value={vehiculo.cilindrajeCc}
                                 onChange={cambiarValor}
-                                placeholder="150"
                                 required
                             />
                         </div>
@@ -146,20 +169,21 @@ export default function RegistroVehiculo() {
 
                 </div>
 
+                {/* CLIENTE */}
+
                 <div className="card">
 
                     <h2>Datos del Cliente</h2>
 
                     <div className="campo">
 
-                        <label>Propietario</label>
+                        <label>Nombre</label>
 
                         <input
                             type="text"
-                            name="propietarioActual"
-                            value={vehiculo.propietarioActual}
+                            name="nombre"
+                            value={vehiculo.cliente.nombre}
                             onChange={cambiarValor}
-                            placeholder="Thomas Prado"
                             required
                         />
 
@@ -171,16 +195,31 @@ export default function RegistroVehiculo() {
 
                         <input
                             type="text"
-                            name="telefonoActual"
-                            value={vehiculo.telefonoActual}
+                            name="telefono"
+                            value={vehiculo.cliente.telefono}
                             onChange={cambiarValor}
-                            placeholder="3001234567"
                             required
                         />
 
                     </div>
 
+                    <div className="campo">
+
+                        <label>Correo</label>
+
+                        <input
+                            type="email"
+                            name="correo"
+                            value={vehiculo.cliente.correo}
+                            onChange={cambiarValor}
+                            placeholder="Opcional"
+                        />
+
+                    </div>
+
                 </div>
+
+                {/* MOTIVO */}
 
                 <div className="card grande">
 
@@ -196,13 +235,13 @@ export default function RegistroVehiculo() {
 
                         onChange={cambiarValor}
 
-                        placeholder="Describe el problema presentado por el vehículo..."
-
                         required
 
-                    ></textarea>
+                    />
 
                 </div>
+
+                {/* RESUMEN */}
 
                 <div className="card">
 
@@ -212,23 +251,19 @@ export default function RegistroVehiculo() {
 
                         <p>
 
-                            <strong>Estado:</strong>
-
-                            Recepción
+                            <strong>Estado:</strong> Recepción
 
                         </p>
 
                         <p>
 
-                            <strong>Fecha:</strong>
-
-                            {new Date().toLocaleDateString()}
+                            <strong>Fecha:</strong> {new Date().toLocaleDateString()}
 
                         </p>
 
                         <button
-                            type="submit"
                             className="btn-registrar"
+                            type="submit"
                         >
 
                             Registrar Vehículo

@@ -15,8 +15,6 @@ public interface VehiculoService {
 
     Optional<Vehiculo> buscarPorPlaca(String placa);
 
-    Optional<Vehiculo> buscarPorTelefono(String telefono);
-
     Vehiculo actualizar(Long id, Vehiculo vehiculo);
 
     void eliminar(Long id);

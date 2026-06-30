@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./Sidebar.css";
 
 export default function Sidebar({
@@ -6,38 +7,69 @@ export default function Sidebar({
 
     cambiarPagina
 
-}){
+}) {
 
-    return(
+    const [menuAbierto, setMenuAbierto] = useState(false);
 
-        <aside className="sidebar">
+    const cambiarVista = (pagina) => {
 
+        cambiarPagina(pagina);
+
+        setMenuAbierto(false);
+
+    };
+
+    return (
+
+        <>
+            {/* Botón hamburguesa (solo aparecerá en celular mediante CSS) */}
             <button
-
-                className={paginaActual==="registro"?"activo":""}
-
-                onClick={()=>cambiarPagina("registro")}
-
+                className="menu-toggle"
+                onClick={() => setMenuAbierto(!menuAbierto)}
             >
-
-                🚗 Registrar
-
+                ☰
             </button>
 
-            <button
+            <aside className={`sidebar ${menuAbierto ? "abierto" : ""}`}>
 
-                className={paginaActual==="lista"?"activo":""}
+                <div className="sidebar-header">
 
-                onClick={()=>cambiarPagina("lista")}
+                    <h2>🚗 MechanicSoft</h2>
 
-            >
+                </div>
 
-                📋 Vehículos
+                <nav>
 
-            </button>
+                    <button
 
-        </aside>
+                        className={paginaActual === "registro" ? "activo" : ""}
 
-    )
+                        onClick={() => cambiarVista("registro")}
+
+                    >
+
+                        🚗 Registrar
+
+                    </button>
+
+                    <button
+
+                        className={paginaActual === "lista" ? "activo" : ""}
+
+                        onClick={() => cambiarVista("lista")}
+
+                    >
+
+                        📋 Vehículos
+
+                    </button>
+
+                </nav>
+
+            </aside>
+
+        </>
+
+    );
 
 }
