@@ -1,0 +1,294 @@
+/* ==========================
+   CONTENEDOR
+========================== */
+
+.registro-container{
+
+    color:white;
+
+    max-width:1400px;
+
+    margin:auto;
+
+}
+
+.registro-container h1{
+
+    margin-bottom:30px;
+
+    font-size:32px;
+
+    font-weight:700;
+
+}
+
+/* ==========================
+   GRID PRINCIPAL
+========================== */
+
+.registro-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:20px;
+
+    align-items:start;
+
+}
+
+/* ==========================
+   TARJETAS
+========================== */
+
+.card{
+
+    background:#1E293B;
+
+    border:1px solid #334155;
+
+    border-radius:14px;
+
+    padding:25px;
+
+    transition:.25s;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+.card:hover{
+
+    border-color:#475569;
+
+}
+
+.grande{
+
+    min-height:320px;
+
+}
+
+.card h2{
+
+    margin-bottom:22px;
+
+    color:#F97316;
+
+    font-size:22px;
+
+}
+
+/* ==========================
+   GRID DEL FORMULARIO
+========================== */
+
+.grid-form{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+}
+
+/* ==========================
+   CAMPOS
+========================== */
+
+.campo{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.campo label{
+
+    margin-bottom:8px;
+
+    color:#CBD5E1;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+/* ==========================
+   INPUTS
+========================== */
+
+.campo input,
+textarea{
+
+    width:100%;
+
+    background:#0F172A;
+
+    color:white;
+
+    border:1px solid #475569;
+
+    border-radius:10px;
+
+    padding:14px;
+
+    font-size:15px;
+
+    transition:.25s;
+
+}
+
+.campo input:focus,
+textarea:focus{
+
+    outline:none;
+
+    border-color:#F97316;
+
+    box-shadow:0 0 0 3px rgba(249,115,22,.18);
+
+}
+
+textarea{
+
+    resize:vertical;
+
+    min-height:180px;
+
+}
+
+/* ==========================
+   RESUMEN
+========================== */
+
+.resumen{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.resumen p{
+
+    color:#E2E8F0;
+
+    font-size:15px;
+
+}
+
+/* ==========================
+   BOTÓN
+========================== */
+
+.btn-registrar{
+
+    width:100%;
+
+    background:#F97316;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:16px;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.btn-registrar:hover{
+
+    background:#EA580C;
+
+    transform:translateY(-2px);
+
+}
+
+.btn-registrar:active{
+
+    transform:scale(.98);
+
+}
+
+/* ==========================
+   TABLET
+========================== */
+
+@media(max-width:992px){
+
+    .registro-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+/* ==========================
+   CELULAR
+========================== */
+
+@media(max-width:768px){
+
+    .registro-container h1{
+
+        font-size:24px;
+
+        text-align:center;
+
+    }
+
+    .grid-form{
+
+        grid-template-columns:1fr;
+
+        gap:16px;
+
+    }
+
+    .card{
+
+        padding:18px;
+
+    }
+
+    .card h2{
+
+        font-size:19px;
+
+    }
+
+    .campo input,
+    textarea{
+
+        font-size:16px;
+
+        padding:15px;
+
+    }
+
+    .btn-registrar{
+
+        padding:18px;
+
+        font-size:18px;
+
+    }
+
+}

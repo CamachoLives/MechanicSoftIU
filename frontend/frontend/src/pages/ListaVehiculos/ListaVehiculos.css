@@ -1,0 +1,127 @@
+.lista {
+    color: white;
+    padding: 20px;
+}
+
+/* INPUT BUSCAR */
+.buscar {
+    width: 350px;
+    max-width: 100%;
+    padding: 12px;
+    margin: 25px 0;
+    background: #1E293B;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    outline: none;
+}
+
+/* TABLA BASE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1E293B;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* HEADER */
+thead {
+    background: #F97316;
+}
+
+th {
+    padding: 15px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* CELDAS */
+td {
+    padding: 15px;
+    border-bottom: 1px solid #334155;
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background: #334155;
+}
+
+/* BOTONES */
+td button {
+    margin-right: 10px;
+    background: #2563EB;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+td button:hover {
+    opacity: 0.85;
+}
+
+/* ========================= */
+/* 📱 RESPONSIVE TABLET */
+/* ========================= */
+@media (max-width: 900px) {
+    .buscar {
+        width: 100%;
+    }
+
+    th, td {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+/* ========================= */
+/* 📱 RESPONSIVE MÓVIL */
+/* ========================= */
+@media (max-width: 600px) {
+
+    .lista {
+        padding: 10px;
+    }
+
+    .buscar {
+        width: 100%;
+        margin: 15px 0;
+    }
+
+    /* 🔥 TABLA RESPONSIVE CON SCROLL */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    td button {
+        padding: 6px 10px;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+}
+
+/* ========================= */
+/* 📱 MÓVIL PEQUEÑO */
+/* ========================= */
+@media (max-width: 400px) {
+
+    th, td {
+        font-size: 12px;
+    }
+
+    td button {
+        display: block;
+        margin-bottom: 5px;
+        width: 100%;
+    }
+}
