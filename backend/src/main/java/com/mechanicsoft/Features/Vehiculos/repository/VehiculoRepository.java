@@ -1,6 +1,6 @@
-package com.mechanicsoft.repository;
+package com.mechanicsoft.Features.Vehiculos.repository;
 
-import com.mechanicsoft.entity.Vehiculo;
+import com.mechanicsoft.Features.Vehiculos.entity.Vehiculo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

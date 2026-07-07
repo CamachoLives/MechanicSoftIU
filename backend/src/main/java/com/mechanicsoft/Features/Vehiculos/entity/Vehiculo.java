@@ -1,5 +1,6 @@
-package com.mechanicsoft.entity;
+package com.mechanicsoft.Features.Vehiculos.entity;
 
+import com.mechanicsoft.Features.Clientes.entity.Cliente;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -15,7 +16,6 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "vehiculos")
 public class Vehiculo {
@@ -61,16 +61,19 @@ public class Vehiculo {
     @Column(name = "telefono_actual", nullable = false)
     private String telefonoActual;
 
+    @NotBlank(message = "El motivo de ingreso es obligatorio")
+    @Column(name = "motivo_ingreso", nullable = false, length = 500)
+    private String motivoIngreso;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
     }
-
-    @NotBlank(message = "El motivo de ingreso es obligatorio")
-    @Column(name = "motivo_ingreso", nullable = false, length = 500)
-    private String motivoIngreso;
-
 }

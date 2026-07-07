@@ -1,6 +1,6 @@
-package com.mechanicsoft.service.interfaces;
+package com.mechanicsoft.Features.Vehiculos.service.interfaces;
 
-import com.mechanicsoft.entity.Vehiculo;
+import com.mechanicsoft.Features.Vehiculos.entity.Vehiculo;
 
 import java.util.List;
 import java.util.Optional;
