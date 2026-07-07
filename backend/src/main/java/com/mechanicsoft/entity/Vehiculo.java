@@ -53,24 +53,24 @@ public class Vehiculo {
     @Column(name = "foto_vehiculo")
     private String fotoVehiculo;
 
-    @NotBlank
-    @Column(name = "propietario_actual", nullable = false)
-    private String propietarioActual;
-
-    @NotBlank
-    @Column(name = "telefono_actual", nullable = false)
-    private String telefonoActual;
+    @NotBlank(message = "El motivo de ingreso es obligatorio")
+    @Column(name = "motivo_ingreso", nullable = false, length = 500)
+    private String motivoIngreso;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    // ===========================
+    // RELACIÓN CON CLIENTE
+    // ===========================
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
     }
-
-    @NotBlank(message = "El motivo de ingreso es obligatorio")
-    @Column(name = "motivo_ingreso", nullable = false, length = 500)
-    private String motivoIngreso;
 
 }
