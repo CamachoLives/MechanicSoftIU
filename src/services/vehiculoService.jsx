@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:8080/api/vehiculos";
+const API = "http://localhost:9769/api/vehiculos";
 
 export const obtenerVehiculos = () => {
     return axios.get(API);
