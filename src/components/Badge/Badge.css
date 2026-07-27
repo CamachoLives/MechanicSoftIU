@@ -1,0 +1,49 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: var(--radio-full);
+    font-family: var(--font-heading);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+
+.badge-icono {
+    display: inline-flex;
+    font-size: 1.05em;
+}
+
+.badge-neutral {
+    background: var(--estado-neutral-bg);
+    color: #b7c2da;
+    border-color: rgba(124, 139, 168, 0.3);
+}
+.badge-info {
+    background: var(--estado-info-bg);
+    color: var(--cian-neon-fuerte);
+    border-color: rgba(56, 189, 248, 0.35);
+}
+.badge-success {
+    background: var(--estado-exito-bg);
+    color: var(--estado-exito);
+    border-color: rgba(52, 211, 153, 0.35);
+}
+.badge-warning {
+    background: var(--estado-advertencia-bg);
+    color: var(--estado-advertencia);
+    border-color: rgba(251, 191, 36, 0.35);
+}
+.badge-serious {
+    background: var(--estado-serio-bg);
+    color: var(--estado-serio);
+    border-color: rgba(251, 146, 60, 0.35);
+}
+.badge-danger {
+    background: var(--estado-critico-bg);
+    color: var(--estado-critico);
+    border-color: rgba(248, 113, 113, 0.4);
+}

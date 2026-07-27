@@ -1,75 +1,55 @@
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { NAV_ITEMS } from "../../config/navegacion";
 import "./Sidebar.css";
 
-export default function Sidebar({
-
-    paginaActual,
-
-    cambiarPagina
-
-}) {
-
+export default function Sidebar({ vistaActual, cambiarVista }) {
+    const { tienePermiso } = useAuth();
     const [menuAbierto, setMenuAbierto] = useState(false);
 
-    const cambiarVista = (pagina) => {
+    const itemsVisibles = NAV_ITEMS.filter((item) => tienePermiso(item.permiso));
 
-        cambiarPagina(pagina);
-
+    const cambiarVistaYCerrar = (clave) => {
+        cambiarVista(clave);
         setMenuAbierto(false);
-
     };
 
     return (
-
         <>
-            {/* Botón hamburguesa (solo aparecerá en celular mediante CSS) */}
             <button
-                className="menu-toggle"
-                onClick={() => setMenuAbierto(!menuAbierto)}
+                type="button"
+                className={`menu-toggle ${menuAbierto ? "menu-toggle-oculto" : ""}`}
+                onClick={() => setMenuAbierto((v) => !v)}
+                aria-label="Abrir menú"
             >
                 ☰
             </button>
 
             <aside className={`sidebar ${menuAbierto ? "abierto" : ""}`}>
-
                 <div className="sidebar-header">
-
-                    <h2>🚗 MechanicSoft</h2>
-
+                    <h2>MechanicSoft</h2>
                 </div>
 
                 <nav>
-
-                    <button
-
-                        className={paginaActual === "registro" ? "activo" : ""}
-
-                        onClick={() => cambiarVista("registro")}
-
-                    >
-
-                        🚗 Registrar
-
-                    </button>
-
-                    <button
-
-                        className={paginaActual === "lista" ? "activo" : ""}
-
-                        onClick={() => cambiarVista("lista")}
-
-                    >
-
-                        📋 Vehículos
-
-                    </button>
-
+                    {itemsVisibles.map((item) => {
+                        const Icono = item.icono;
+                        return (
+                            <button
+                                key={item.clave}
+                                className={vistaActual === item.clave ? "activo" : ""}
+                                onClick={() => cambiarVistaYCerrar(item.clave)}
+                            >
+                                <Icono className="sidebar-icono" />
+                                {item.etiqueta}
+                            </button>
+                        );
+                    })}
                 </nav>
-
             </aside>
 
+            {menuAbierto && (
+                <div className="sidebar-fondo" onClick={() => setMenuAbierto(false)} />
+            )}
         </>
-
     );
-
 }

@@ -1,111 +1,289 @@
+/* ==========================================================
+   MECHANICSOFT — Sistema visual "Cristal Azul"
+   Tokens compartidos por toda la aplicación.
+========================================================== */
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* ---------- Superficies ---------- */
+  --bg-void: #05070d;
+  --bg-base: #0b1220;
+  --bg-elevated: #101b33;
+  --bg-elevated-2: #16213f;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* ---------- Vidrio esmerilado (paneles) ---------- */
+  --glass-bg: rgba(147, 197, 253, 0.06);
+  --glass-bg-strong: rgba(147, 197, 253, 0.12);
+  --glass-border: rgba(147, 197, 253, 0.22);
+  --glass-border-strong: rgba(147, 197, 253, 0.45);
+  --glass-blur: 20px;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
+  /* ---------- Acentos azules ---------- */
+  --azul-pastel: #93c5fd;
+  --azul-pastel-suave: #bfdbfe;
+  --azul-pastel-fuerte: #60a5fa;
+  --cian-neon: #38bdf8;
+  --cian-neon-fuerte: #7dd3fc;
+  --indigo: #6366f1;
+
+  /* ---------- Texto ---------- */
+  --texto-primario: #e7f0ff;
+  --texto-secundario: #93a5c9;
+  --texto-muted: #5b6b8c;
+  --texto-invertido: #041019;
+
+  /* ---------- Estados (semánticos, no decorativos) ---------- */
+  --estado-exito: #34d399;
+  --estado-exito-bg: rgba(52, 211, 153, 0.14);
+  --estado-advertencia: #fbbf24;
+  --estado-advertencia-bg: rgba(251, 191, 36, 0.14);
+  --estado-serio: #fb923c;
+  --estado-serio-bg: rgba(251, 146, 60, 0.14);
+  --estado-critico: #f87171;
+  --estado-critico-bg: rgba(248, 113, 113, 0.16);
+  --estado-neutral: #7c8ba8;
+  --estado-neutral-bg: rgba(124, 139, 168, 0.14);
+  --estado-info: #38bdf8;
+  --estado-info-bg: rgba(56, 189, 248, 0.14);
+
+  /* ---------- Tipografía ---------- */
+  --font-display: "Orbitron", "Rajdhani", sans-serif;
+  --font-heading: "Rajdhani", system-ui, sans-serif;
+  --font-sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+
+  /* ---------- Forma ---------- */
+  --radio-lg: 20px;
+  --radio-md: 14px;
+  --radio-sm: 9px;
+  --radio-full: 999px;
+
+  /* ---------- Sombra / glow ---------- */
+  --sombra-panel: 0 20px 45px -20px rgba(0, 0, 0, 0.55);
+  --glow-azul: 0 0 0 1px rgba(56, 189, 248, 0.25), 0 0 24px rgba(56, 189, 248, 0.18);
+  --glow-azul-fuerte: 0 0 0 1px rgba(125, 211, 252, 0.5), 0 0 32px rgba(56, 189, 248, 0.35);
+
+  color-scheme: dark;
+  color: var(--texto-primario);
+  background: var(--bg-void);
+  font: 15px/1.5 var(--font-sans);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+html,
+body,
+#root {
+  min-height: 100%;
 }
 
 body {
   margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  background: var(--bg-void);
+  color: var(--texto-primario);
 }
 
 h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+h2,
+h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--texto-primario);
+  margin: 0;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
 p {
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  color: inherit;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* ---------- Utilidades compartidas ---------- */
+
+.panel-cristal {
+  background: linear-gradient(180deg, var(--glass-bg-strong), var(--glass-bg));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radio-lg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--sombra-panel);
+}
+
+.texto-glow {
+  background: linear-gradient(120deg, var(--azul-pastel-suave), var(--cian-neon-fuerte));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.fondo-grid {
+  background-image: linear-gradient(rgba(147, 197, 253, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(147, 197, 253, 0.055) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.formulario-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ---------- Tabla de datos (Vehículos, Usuarios, Roles, Grupos) ---------- */
+
+.tabla-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.tabla-encabezado h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 18px;
+}
+
+.tabla-datos-contenedor {
+  overflow-x: auto;
+  border-radius: var(--radio-lg);
+}
+
+.tabla-datos {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radio-lg);
+  overflow: hidden;
+}
+
+.tabla-datos thead {
+  background: var(--bg-elevated-2);
+}
+
+.tabla-datos th {
+  padding: 14px 16px;
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--texto-secundario);
+  white-space: nowrap;
+}
+
+.tabla-datos td {
+  padding: 14px 16px;
+  border-top: 1px solid var(--glass-border);
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+.tabla-datos tbody tr:hover {
+  background: rgba(147, 197, 253, 0.05);
+}
+
+.tabla-datos-vacio {
+  text-align: center;
+  color: var(--texto-muted);
+  padding: 40px 20px !important;
+}
+
+.tabla-datos-cargando {
+  color: var(--texto-secundario);
+  padding: 30px 0;
+}
+
+.tabla-acciones {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tabla-acciones .btn {
+  padding: 7px 12px;
+  font-size: 13px;
+}
+
+.celda-principal {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.celda-principal strong {
+  color: var(--texto-primario);
+}
+
+.celda-principal span {
+  color: var(--texto-muted);
+  font-size: 12.5px;
+}
+
+/* Scrollbar oscuro a juego con el tema */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--glass-border-strong);
+  border-radius: var(--radio-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cian-neon);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes flotar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulso-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  :root {
+    font-size: 14px;
+  }
 }

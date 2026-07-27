@@ -1,0 +1,28 @@
+.campo-select-caja {
+    position: relative;
+}
+
+.campo-select-caja select {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    padding-right: 26px;
+}
+
+.campo-select-caja::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--texto-secundario);
+    border-bottom: 2px solid var(--texto-secundario);
+    transform: translateY(-65%) rotate(45deg);
+    pointer-events: none;
+}
+
+.campo-select-caja select option {
+    background: var(--bg-elevated);
+    color: var(--texto-primario);
+}

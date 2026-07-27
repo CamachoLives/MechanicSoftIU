@@ -1,0 +1,109 @@
+.campo-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+    width: 100%;
+}
+
+.campo-input-label {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--texto-secundario);
+}
+
+.campo-input-requerido {
+    color: var(--cian-neon-fuerte);
+}
+
+.campo-input-caja {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: rgba(5, 10, 20, 0.55);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radio-md);
+    padding: 0 14px;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.campo-input-caja:focus-within {
+    border-color: var(--cian-neon);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+}
+
+.campo-input-caja-multilinea {
+    align-items: flex-start;
+    padding: 12px 14px;
+}
+
+.campo-input-caja-rango {
+    background: transparent;
+    border-color: transparent;
+    padding: 6px 0;
+}
+
+.campo-input-caja-rango input[type="range"] {
+    accent-color: var(--cian-neon);
+    padding: 0;
+}
+
+.campo-input-icono {
+    display: inline-flex;
+    color: var(--texto-secundario);
+    font-size: 1.1em;
+}
+
+.campo-input-accion {
+    display: inline-flex;
+    flex-shrink: 0;
+}
+
+.campo-input-accion button {
+    background: none;
+    border: none;
+    color: var(--texto-secundario);
+    cursor: pointer;
+    display: inline-flex;
+    padding: 4px;
+    font-size: 1.15em;
+    transition: color 0.2s ease;
+}
+
+.campo-input-accion button:hover {
+    color: var(--cian-neon);
+}
+
+.campo-input-caja input,
+.campo-input-caja textarea,
+.campo-input-caja select {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--texto-primario);
+    font-size: 15px;
+    padding: 12px 0;
+    font-family: var(--font-sans);
+    resize: vertical;
+    min-width: 0;
+}
+
+.campo-input-caja input::placeholder,
+.campo-input-caja textarea::placeholder {
+    color: var(--texto-muted);
+}
+
+.campo-input-error {
+    border-color: var(--estado-critico);
+}
+
+.campo-input-mensaje {
+    font-size: 13px;
+    color: var(--estado-critico);
+}

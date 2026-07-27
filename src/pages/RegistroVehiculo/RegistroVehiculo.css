@@ -4,11 +4,13 @@
 
 .registro-container{
 
-    color:white;
+    color:var(--texto-primario);
 
     max-width:1400px;
 
     margin:auto;
+
+    animation:aparecer .3s ease;
 
 }
 
@@ -16,8 +18,8 @@
 
     margin-bottom:30px;
 
+    font-family:var(--font-heading);
     font-size:32px;
-
     font-weight:700;
 
 }
@@ -39,28 +41,31 @@
 }
 
 /* ==========================
-   TARJETAS
+   TARJETAS (vidrio esmerilado)
 ========================== */
 
 .card{
 
-    background:#1E293B;
+    background:linear-gradient(180deg, var(--glass-bg-strong), var(--glass-bg));
 
-    border:1px solid #334155;
+    border:1px solid var(--glass-border);
 
-    border-radius:14px;
+    border-radius:var(--radio-lg);
 
     padding:25px;
 
+    backdrop-filter:blur(var(--glass-blur));
+    -webkit-backdrop-filter:blur(var(--glass-blur));
+
     transition:.25s;
 
-    box-shadow:0 5px 15px rgba(0,0,0,.15);
+    box-shadow:var(--sombra-panel);
 
 }
 
 .card:hover{
 
-    border-color:#475569;
+    border-color:var(--glass-border-strong);
 
 }
 
@@ -74,8 +79,8 @@
 
     margin-bottom:22px;
 
-    color:#F97316;
-
+    color:var(--azul-pastel);
+    font-family:var(--font-heading);
     font-size:22px;
 
 }
@@ -110,11 +115,12 @@
 
     margin-bottom:8px;
 
-    color:#CBD5E1;
-
-    font-size:14px;
-
+    color:var(--texto-secundario);
+    font-family:var(--font-heading);
+    font-size:13px;
     font-weight:600;
+    letter-spacing:.4px;
+    text-transform:uppercase;
 
 }
 
@@ -127,17 +133,18 @@ textarea{
 
     width:100%;
 
-    background:#0F172A;
+    background:rgba(5,10,20,.55);
 
-    color:white;
+    color:var(--texto-primario);
 
-    border:1px solid #475569;
+    border:1px solid var(--glass-border);
 
-    border-radius:10px;
+    border-radius:var(--radio-md);
 
     padding:14px;
 
     font-size:15px;
+    font-family:var(--font-sans);
 
     transition:.25s;
 
@@ -148,9 +155,9 @@ textarea:focus{
 
     outline:none;
 
-    border-color:#F97316;
+    border-color:var(--cian-neon);
 
-    box-shadow:0 0 0 3px rgba(249,115,22,.18);
+    box-shadow:0 0 0 3px rgba(56,189,248,.18);
 
 }
 
@@ -178,9 +185,14 @@ textarea{
 
 .resumen p{
 
-    color:#E2E8F0;
-
+    color:var(--texto-primario);
     font-size:15px;
+
+}
+
+.resumen strong{
+
+    color:var(--azul-pastel);
 
 }
 
@@ -192,21 +204,23 @@ textarea{
 
     width:100%;
 
-    background:#F97316;
+    background:linear-gradient(135deg, var(--azul-pastel-fuerte), var(--cian-neon));
 
-    color:white;
+    color:#04121f;
 
     border:none;
 
-    border-radius:10px;
+    border-radius:var(--radio-md);
 
     padding:16px;
 
+    font-family:var(--font-heading);
     font-size:17px;
-
-    font-weight:600;
+    font-weight:700;
 
     cursor:pointer;
+
+    box-shadow:var(--glow-azul);
 
     transition:.25s;
 
@@ -214,8 +228,7 @@ textarea{
 
 .btn-registrar:hover{
 
-    background:#EA580C;
-
+    box-shadow:var(--glow-azul-fuerte);
     transform:translateY(-2px);
 
 }

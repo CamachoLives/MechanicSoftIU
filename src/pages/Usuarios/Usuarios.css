@@ -1,0 +1,206 @@
+.usuarios-pagina {
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: aparecer 0.3s ease;
+}
+
+.usuarios-pagina h1 {
+    font-family: var(--font-heading);
+    font-size: 30px;
+}
+
+.usuarios-subtitulo {
+    color: var(--texto-secundario);
+    margin-top: 6px;
+    margin-bottom: 24px;
+}
+
+.usuarios-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--glass-border);
+    margin-bottom: 24px;
+    padding-bottom: 4px;
+}
+
+.usuarios-tabs button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: var(--texto-secundario);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 14.5px;
+    padding: 10px 16px;
+    border-radius: var(--radio-md) var(--radio-md) 0 0;
+    cursor: pointer;
+    position: relative;
+    transition: 0.2s;
+}
+
+.usuarios-tabs button:hover {
+    color: var(--texto-primario);
+    background: var(--glass-bg);
+}
+
+.usuarios-tabs button.activa {
+    color: var(--cian-neon-fuerte);
+}
+
+.usuarios-tabs button.activa::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: -5px;
+    height: 2px;
+    background: var(--cian-neon);
+    box-shadow: 0 0 8px var(--cian-neon);
+}
+
+.usuarios-contenido {
+    animation: aparecer 0.25s ease;
+}
+
+/* Nota: .tabla-*, .tabla-acciones y .celda-principal viven en index.css
+   (compartidas también por ListaVehiculos). Aquí solo lo específico de este módulo. */
+
+/* ---- Selector de chips (grupos de un usuario, miembros de un grupo) ---- */
+
+.selector-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.selector-chips-vacio {
+    color: var(--texto-muted);
+    font-size: 13px;
+}
+
+.chip-seleccionable {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--texto-secundario);
+    padding: 7px 14px;
+    border-radius: var(--radio-full);
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.chip-seleccionable:hover {
+    border-color: var(--glass-border-strong);
+}
+
+.chip-seleccionable.seleccionado {
+    background: rgba(56, 189, 248, 0.18);
+    border-color: var(--cian-neon);
+    color: var(--texto-primario);
+}
+
+/* ---- Matriz de permisos (formulario de rol) ---- */
+
+.matriz-permisos {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.matriz-permisos-grupo {
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radio-md);
+    padding: 14px 16px;
+}
+
+.matriz-permisos-grupo h4 {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--azul-pastel);
+    margin-bottom: 10px;
+}
+
+.matriz-permisos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.matriz-permisos-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--texto-secundario);
+    cursor: pointer;
+}
+
+.matriz-permisos-item input {
+    accent-color: var(--cian-neon);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.matriz-permisos-todo {
+    color: inherit;
+    font-weight: 600;
+}
+
+/* ---- Notas de ayuda y catálogo de permisos ---- */
+
+.formulario-nota {
+    font-size: 12.5px;
+    color: var(--texto-muted);
+    line-height: 1.5;
+    margin: -6px 0 4px;
+}
+
+.permisos-tabla {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.permisos-fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.permisos-fila:last-child {
+    border-bottom: none;
+}
+
+.permisos-etiqueta {
+    font-size: 13.5px;
+    color: var(--texto-primario);
+    flex: 1;
+    min-width: 200px;
+}
+
+.permisos-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+@media (max-width: 640px) {
+    .usuarios-tabs {
+        gap: 2px;
+    }
+
+    .usuarios-tabs button {
+        padding: 9px 11px;
+        font-size: 13px;
+    }
+}

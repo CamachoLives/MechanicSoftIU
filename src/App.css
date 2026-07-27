@@ -6,9 +6,9 @@
 
 body{
 
-    background:#0F172A;
-    color:white;
-    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg-void);
+    color:var(--texto-primario);
+    font-family:var(--font-sans);
 
 }
 
@@ -30,5 +30,19 @@ body{
     flex:1;
     padding:30px;
     overflow:auto;
+    background:
+        radial-gradient(circle at 15% 0%, rgba(56,189,248,.07), transparent 45%),
+        radial-gradient(circle at 100% 20%, rgba(147,197,253,.05), transparent 40%),
+        var(--bg-base);
+
+}
+
+@media (max-width:768px){
+
+    .contenido{
+
+        padding:18px;
+
+    }
 
 }
