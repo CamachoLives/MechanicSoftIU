@@ -1,16 +1,67 @@
-# React + Vite
+# 🏍️ MechanicSoft — Panel Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Panel de control para talleres de motos: control de acceso por roles, un tablero en vivo de las 4 bahías del taller, y el registro de los vehículos que ingresan. Construido con **React 19 + Vite**, con una interfaz oscura de paneles de vidrio azul pastel y acentos en cian ("Cristal Azul").
 
-Currently, two official plugins are available:
+Este frontend consume la API de vehículos del proyecto hermano **[MechanicSoftRest](../MechanicSoftRest)**. El login, los usuarios/roles/grupos y el tablero del taller son independientes de esa API: viven en el `localStorage` del navegador, así que funcionan aunque el backend no esté corriendo (solo el módulo de Vehículos lo necesita).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Cómo empezar
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Opción A — con Docker
 
-## Expanding the ESLint configuration
+Requisitos: Docker y Docker Compose.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+docker compose up --build
+```
+
+La aplicación queda disponible en **http://localhost:8080**.
+
+### Opción B — local, sin Docker
+
+Requisitos: Node.js 20 o superior.
+
+```bash
+npm install
+npm run dev
+```
+
+La aplicación queda disponible en **http://localhost:5173**.
+
+> En ambos casos, si quieres que el módulo de **Vehículos** cargue datos reales, levanta también [MechanicSoftRest](../MechanicSoftRest) (por defecto se espera en `http://localhost:9769`). Sin él, el resto de la app funciona igual y solo se muestra un aviso de conexión en esa sección.
+
+---
+
+## 👥 Usuarios de prueba
+
+Es un entorno de demostración: en la pantalla de login hay un panel de "Usuarios de prueba" con estas cuentas ya creadas (un clic inicia sesión con cualquiera de ellas):
+
+| Usuario           | Contraseña     | Rol                              |
+|-------------------|----------------|-----------------------------------|
+| `admin`           | `admin123`     | Administrador                    |
+| `jorge.mecanico`  | `mecanico123`  | Mecánico                         |
+| `carlos.mecanico` | `mecanico123`  | Mecánico (+ bono de Supervisor)  |
+| `recepcion`       | `recepcion123` | Recepción                        |
+
+Las contraseñas viven sin cifrar solo en el navegador (localStorage) — es un esquema pensado para demostración, no para producción.
+
+---
+
+## Estructura
+
+- `pages/Login` — autenticación.
+- `pages/Taller` — tablero de las 4 bahías (asignar, actualizar, finalizar, cancelar).
+- `pages/Usuarios` — CRUD de usuarios, roles (con su matriz de permisos), grupos y catálogo de permisos.
+- `pages/RegistroVehiculo` / `pages/ListaVehiculos` — alta y listado de vehículos (contra la API real).
+- `context/AuthContext` — sesión y resolución de permisos por rol/grupo.
+- `services/*` — capa de acceso a datos: `vehiculoService` habla con el backend real; el resto (`usuarioService`, `rolService`, `grupoService`, `tallerService`, `authService`) son mocks sobre `localStorage` con la misma forma, para poder reemplazarlos por una API real más adelante sin tocar quien los usa.
+
+## Scripts disponibles
+
+```bash
+npm run dev      # servidor de desarrollo
+npm run build    # build de producción a dist/
+npm run lint     # ESLint
+npm run preview  # sirve el build de producción localmente
+```
