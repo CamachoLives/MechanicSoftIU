@@ -1,0 +1,35 @@
+.repuestos-pagina {
+    max-width: 1300px;
+    margin: 0 auto;
+    animation: aparecer 0.3s ease;
+}
+
+.repuestos-pagina h1 {
+    font-family: var(--font-heading);
+    font-size: 30px;
+}
+
+.repuestos-subtitulo {
+    color: var(--texto-secundario);
+    margin-top: 6px;
+    margin-bottom: 24px;
+}
+
+.repuestos-filtros {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.repuestos-buscar {
+    width: 320px;
+    max-width: 100%;
+}
+
+@media (max-width: 600px) {
+    .repuestos-buscar {
+        width: 100%;
+    }
+}
