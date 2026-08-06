@@ -1,89 +1,58 @@
-import { obtener, guardar, generarId } from "../utils/storage";
-import { tienePermiso } from "../utils/rbac";
+import axios from "axios";
+import { mensajeError } from "../utils/apiError";
+
+const API = "http://localhost:9769/api/usuarios";
+
+// El backend anida el rol completo ({rol: {id, nombre, permisos...}}); la UI
+// existente espera un rolId plano — se adapta acá para no tocar esos componentes.
+function aFormaFrontend(usuario) {
+    if (!usuario) return usuario;
+    return { ...usuario, rolId: usuario.rol?.id ?? "" };
+}
+
+function aFormaBackend(datos) {
+    const payload = { ...datos };
+    if (datos.rolId) {
+        payload.rol = { id: datos.rolId };
+    }
+    delete payload.rolId;
+    delete payload.grupoIds; // la membresía de grupo se administra desde Grupos, no desde Usuario
+    return payload;
+}
 
 export async function obtenerUsuarios() {
-    return obtener("usuarios", []);
+    const respuesta = await axios.get(API);
+    return respuesta.data.map(aFormaFrontend);
+}
+
+export async function buscarUsuarioPorId(id) {
+    const respuesta = await axios.get(`${API}/${id}`);
+    return aFormaFrontend(respuesta.data);
 }
 
 export async function crearUsuario(datos) {
-    const usuarios = obtener("usuarios", []);
-
-    const yaExiste = usuarios.some(
-        (u) => u.usuario.toLowerCase() === datos.usuario.trim().toLowerCase()
-    );
-    if (yaExiste) {
-        throw new Error("Ya existe un usuario con ese nombre de usuario.");
+    try {
+        const respuesta = await axios.post(API, aFormaBackend(datos));
+        return aFormaFrontend(respuesta.data);
+    } catch (error) {
+        throw new Error(mensajeError(error, "No se pudo crear el usuario."), { cause: error });
     }
-
-    const nuevo = {
-        id: generarId(),
-        usuario: datos.usuario.trim(),
-        contrasena: datos.contrasena,
-        nombre: datos.nombre.trim(),
-        correo: datos.correo?.trim() ?? "",
-        rolId: datos.rolId,
-        grupoIds: datos.grupoIds ?? [],
-        activo: datos.activo ?? true,
-        creadoEn: new Date().toISOString(),
-    };
-
-    guardar("usuarios", [...usuarios, nuevo]);
-    return nuevo;
 }
 
 export async function actualizarUsuario(id, cambios) {
-    const usuarios = obtener("usuarios", []);
-
-    if (cambios.usuario) {
-        const duplicado = usuarios.some(
-            (u) => u.id !== id && u.usuario.toLowerCase() === cambios.usuario.trim().toLowerCase()
-        );
-        if (duplicado) {
-            throw new Error("Ya existe un usuario con ese nombre de usuario.");
-        }
+    try {
+        const respuesta = await axios.put(`${API}/${id}`, aFormaBackend(cambios));
+        return aFormaFrontend(respuesta.data);
+    } catch (error) {
+        throw new Error(mensajeError(error, "No se pudo actualizar el usuario."), { cause: error });
     }
-
-    if (cambios.activo === false || cambios.rolId) {
-        verificarNoUltimoAdministrador(usuarios, id);
-    }
-
-    let actualizado = null;
-    const siguientes = usuarios.map((u) => {
-        if (u.id !== id) return u;
-        actualizado = { ...u, ...cambios };
-        return actualizado;
-    });
-
-    guardar("usuarios", siguientes);
-    return actualizado;
 }
 
-export async function eliminarUsuario(id) {
-    const usuarios = obtener("usuarios", []);
-    verificarNoUltimoAdministrador(usuarios, id);
-
-    guardar("usuarios", usuarios.filter((u) => u.id !== id));
-
-    const grupos = obtener("grupos", []);
-    guardar(
-        "grupos",
-        grupos.map((g) => ({ ...g, miembroIds: g.miembroIds.filter((mid) => mid !== id) }))
-    );
-}
-
-/** Evita quedarse sin nadie que pueda administrar usuarios (bloquea el último con "usuarios.editar"). */
-function verificarNoUltimoAdministrador(usuarios, idAfectado) {
-    const roles = obtener("roles", []);
-    const grupos = obtener("grupos", []);
-
-    const quedanOtrosAdmins = usuarios.some((u) => {
-        if (u.id === idAfectado || u.activo === false) return false;
-        return tienePermiso(u, "usuarios.editar", { roles, grupos });
-    });
-
-    if (!quedanOtrosAdmins) {
-        throw new Error(
-            "No es posible continuar: no quedaría ningún usuario activo con permiso para administrar usuarios."
-        );
+export async function cambiarEstadoUsuario(id, activo) {
+    try {
+        const respuesta = await axios.patch(`${API}/${id}/estado`, { activo });
+        return aFormaFrontend(respuesta.data);
+    } catch (error) {
+        throw new Error(mensajeError(error, "No se pudo cambiar el estado del usuario."), { cause: error });
     }
 }

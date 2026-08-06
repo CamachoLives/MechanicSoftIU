@@ -13,13 +13,15 @@ export default function ModalVehiculo({ abierto, vehiculo, cerrar }) {
                 </div>
 
                 <div className="detalle-fila">
-                    <strong>Marca</strong>
-                    <span>{vehiculo.marca}</span>
+                    <strong>Marca / Modelo</strong>
+                    <span>
+                        {vehiculo.marca} {vehiculo.modelo}
+                    </span>
                 </div>
 
                 <div className="detalle-fila">
-                    <strong>Modelo</strong>
-                    <span>{vehiculo.modelo}</span>
+                    <strong>Año</strong>
+                    <span>{vehiculo.anio}</span>
                 </div>
 
                 <div className="detalle-fila">
@@ -39,27 +41,27 @@ export default function ModalVehiculo({ abierto, vehiculo, cerrar }) {
 
                 <div className="detalle-fila">
                     <strong>Propietario</strong>
-                    <span>{vehiculo.propietarioActual}</span>
+                    <span>{vehiculo.cliente?.nombre ?? "—"}</span>
                 </div>
 
                 <div className="detalle-fila">
                     <strong>Teléfono</strong>
-                    <span>{vehiculo.telefonoActual}</span>
+                    <span>{vehiculo.cliente?.telefono ?? "—"}</span>
                 </div>
 
                 <div className="detalle-fila">
-                    <strong>Fecha</strong>
+                    <strong>Registrado</strong>
                     <span>
-                        {vehiculo.createdAt
-                            ? new Date(vehiculo.createdAt).toLocaleDateString()
-                            : ""}
+                        {vehiculo.createdAt ? new Date(vehiculo.createdAt).toLocaleDateString() : ""}
                     </span>
                 </div>
 
-                <div className="detalle-motivo">
-                    <strong>Motivo de ingreso</strong>
-                    <p>{vehiculo.motivoIngreso}</p>
-                </div>
+                {vehiculo.observaciones && (
+                    <div className="detalle-motivo">
+                        <strong>Observaciones</strong>
+                        <p>{vehiculo.observaciones}</p>
+                    </div>
+                )}
             </div>
         </Modal>
     );

@@ -10,14 +10,15 @@ function formularioVacio() {
     return {
         nombre: "",
         correo: "",
+        telefono: "",
+        cargo: "",
         usuario: "",
         contrasena: "",
         rolId: "",
-        grupoIds: [],
     };
 }
 
-export default function UsuarioFormModal({ usuario, roles, grupos, cerrar, alGuardar }) {
+export default function UsuarioFormModal({ usuario, roles, cerrar, alGuardar }) {
     const toast = useToast();
     const abierto = usuario !== undefined;
     const editando = Boolean(usuario);
@@ -36,10 +37,11 @@ export default function UsuarioFormModal({ usuario, roles, grupos, cerrar, alGua
                     ? {
                           nombre: usuario.nombre,
                           correo: usuario.correo ?? "",
+                          telefono: usuario.telefono ?? "",
+                          cargo: usuario.cargo ?? "",
                           usuario: usuario.usuario,
                           contrasena: "",
                           rolId: usuario.rolId ?? "",
-                          grupoIds: usuario.grupoIds ?? [],
                       }
                     : formularioVacio()
             );
@@ -48,15 +50,6 @@ export default function UsuarioFormModal({ usuario, roles, grupos, cerrar, alGua
 
     const actualizarCampo = (campo) => (e) => {
         setForm((actual) => ({ ...actual, [campo]: e.target.value }));
-    };
-
-    const alternarGrupo = (grupoId) => {
-        setForm((actual) => ({
-            ...actual,
-            grupoIds: actual.grupoIds.includes(grupoId)
-                ? actual.grupoIds.filter((id) => id !== grupoId)
-                : [...actual.grupoIds, grupoId],
-        }));
     };
 
     const alEnviar = async (e) => {
@@ -117,6 +110,18 @@ export default function UsuarioFormModal({ usuario, roles, grupos, cerrar, alGua
                     placeholder="Opcional"
                 />
                 <Input
+                    label="Teléfono"
+                    value={form.telefono}
+                    onChange={actualizarCampo("telefono")}
+                    placeholder="Opcional"
+                />
+                <Input
+                    label="Cargo"
+                    value={form.cargo}
+                    onChange={actualizarCampo("cargo")}
+                    placeholder="Ej. Mecánico de motos, Recepción..."
+                />
+                <Input
                     label="Usuario (para iniciar sesión)"
                     required
                     value={form.usuario}
@@ -137,27 +142,6 @@ export default function UsuarioFormModal({ usuario, roles, grupos, cerrar, alGua
                     onChange={actualizarCampo("rolId")}
                     opciones={roles.map((r) => ({ value: r.id, label: r.nombre }))}
                 />
-
-                <div className="campo-input">
-                    <span className="campo-input-label">Grupos</span>
-                    <div className="selector-chips">
-                        {grupos.length === 0 && (
-                            <span className="selector-chips-vacio">No hay grupos creados.</span>
-                        )}
-                        {grupos.map((g) => (
-                            <button
-                                type="button"
-                                key={g.id}
-                                className={`chip-seleccionable ${
-                                    form.grupoIds.includes(g.id) ? "seleccionado" : ""
-                                }`}
-                                onClick={() => alternarGrupo(g.id)}
-                            >
-                                {g.nombre}
-                            </button>
-                        ))}
-                    </div>
-                </div>
             </form>
         </Modal>
     );

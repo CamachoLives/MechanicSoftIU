@@ -17,10 +17,3 @@ export function guardar(clave, valor) {
 export function eliminarClave(clave) {
     localStorage.removeItem(PREFIJO + clave);
 }
-
-export function generarId() {
-    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
-        return crypto.randomUUID();
-    }
-    return `id-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-}

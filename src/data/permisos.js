@@ -4,9 +4,27 @@ export const CATALOGO_PERMISOS = [
     { clave: "vehiculos.editar", etiqueta: "Editar vehículos", modulo: "Vehículos" },
     { clave: "vehiculos.eliminar", etiqueta: "Eliminar vehículos", modulo: "Vehículos" },
 
-    { clave: "taller.ver", etiqueta: "Ver el taller", modulo: "Taller" },
-    { clave: "taller.asignar", etiqueta: "Asignar vehículos a bahías", modulo: "Taller" },
-    { clave: "taller.gestionar", etiqueta: "Gestionar bahías (progreso, finalizar, cancelar)", modulo: "Taller" },
+    { clave: "clientes.ver", etiqueta: "Ver clientes", modulo: "Clientes" },
+    { clave: "clientes.crear", etiqueta: "Registrar clientes", modulo: "Clientes" },
+    { clave: "clientes.editar", etiqueta: "Editar clientes", modulo: "Clientes" },
+    { clave: "clientes.eliminar", etiqueta: "Eliminar clientes", modulo: "Clientes" },
+
+    { clave: "ordenes.ver", etiqueta: "Ver órdenes de servicio", modulo: "Órdenes de servicio" },
+    { clave: "ordenes.crear", etiqueta: "Crear órdenes de servicio", modulo: "Órdenes de servicio" },
+    { clave: "ordenes.editar", etiqueta: "Editar diagnóstico y trabajo realizado", modulo: "Órdenes de servicio" },
+    { clave: "ordenes.cambiarEstado", etiqueta: "Cambiar el estado de una orden", modulo: "Órdenes de servicio" },
+    { clave: "ordenes.gestionarServicios", etiqueta: "Agregar/quitar servicios de una orden", modulo: "Órdenes de servicio" },
+    { clave: "ordenes.gestionarRepuestos", etiqueta: "Agregar/quitar repuestos de una orden", modulo: "Órdenes de servicio" },
+
+    { clave: "repuestos.ver", etiqueta: "Ver repuestos", modulo: "Repuestos" },
+    { clave: "repuestos.crear", etiqueta: "Crear repuestos", modulo: "Repuestos" },
+    { clave: "repuestos.editar", etiqueta: "Editar repuestos", modulo: "Repuestos" },
+    { clave: "repuestos.eliminar", etiqueta: "Eliminar repuestos", modulo: "Repuestos" },
+    { clave: "repuestos.movimientos", etiqueta: "Registrar entradas/salidas de stock", modulo: "Repuestos" },
+
+    { clave: "pagos.ver", etiqueta: "Ver pagos", modulo: "Pagos" },
+    { clave: "pagos.registrar", etiqueta: "Registrar pagos", modulo: "Pagos" },
+    { clave: "pagos.anular", etiqueta: "Anular pagos", modulo: "Pagos" },
 
     { clave: "usuarios.ver", etiqueta: "Ver usuarios", modulo: "Usuarios" },
     { clave: "usuarios.crear", etiqueta: "Crear usuarios", modulo: "Usuarios" },

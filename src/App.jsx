@@ -11,13 +11,23 @@ import Login from "./pages/Login/Login";
 
 import RegistroVehiculo from "./pages/RegistroVehiculo/RegistroVehiculo";
 import ListaVehiculos from "./pages/ListaVehiculos/ListaVehiculos";
-import Taller from "./pages/Taller/Taller";
+import OrdenesServicio from "./pages/OrdenesServicio/OrdenesServicio";
+import Clientes from "./pages/Clientes/Clientes";
+import Repuestos from "./pages/Repuestos/Repuestos";
 import Usuarios from "./pages/Usuarios/Usuarios";
 
 function App() {
-    const { usuarioActual, tienePermiso } = useAuth();
+    const { usuarioActual, cargando, tienePermiso } = useAuth();
 
     const [vista, setVista] = useState(null);
+
+    if (cargando) {
+        return (
+            <div className="app-cargando">
+                <span className="app-cargando-spinner" />
+            </div>
+        );
+    }
 
     if (!usuarioActual) {
         return <Login />;
@@ -40,9 +50,11 @@ function App() {
                         <AccesoDenegado mensaje="Tu usuario no tiene ningún permiso asignado todavía. Contacta a un administrador." />
                     )}
 
-                    {vistaActual === "taller" && <Taller />}
+                    {vistaActual === "ordenes" && <OrdenesServicio />}
+                    {vistaActual === "clientes" && <Clientes />}
                     {vistaActual === "vehiculos-registro" && <RegistroVehiculo />}
                     {vistaActual === "vehiculos-lista" && <ListaVehiculos />}
+                    {vistaActual === "repuestos" && <Repuestos />}
                     {vistaActual === "usuarios" && <Usuarios />}
                 </main>
             </div>

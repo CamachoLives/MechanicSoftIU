@@ -1,0 +1,67 @@
+.clientes-pagina {
+    max-width: 1300px;
+    margin: 0 auto;
+    animation: aparecer 0.3s ease;
+}
+
+.clientes-pagina h1 {
+    font-family: var(--font-heading);
+    font-size: 30px;
+}
+
+.clientes-subtitulo {
+    color: var(--texto-secundario);
+    margin-top: 6px;
+    margin-bottom: 24px;
+}
+
+.clientes-filtros {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.clientes-buscar {
+    width: 320px;
+    max-width: 100%;
+}
+
+.clientes-sin-vehiculos {
+    color: var(--texto-muted);
+}
+
+.clientes-lista-vehiculos {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.clientes-lista-vehiculos li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--texto-primario);
+    font-size: 14px;
+}
+
+.clientes-lista-vehiculos li:last-child {
+    border-bottom: none;
+}
+
+.clientes-vehiculo-placa {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--azul-pastel);
+}
+
+@media (max-width: 600px) {
+    .clientes-buscar {
+        width: 100%;
+    }
+}
