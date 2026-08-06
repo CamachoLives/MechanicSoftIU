@@ -1,46 +1,55 @@
-import { obtener, guardar, generarId } from "../utils/storage";
+import axios from "axios";
+import { mensajeError } from "../utils/apiError";
+
+const API = "http://localhost:9769/api/grupos";
+
+// El backend anida los miembros y el rol bono como objetos completos; la UI
+// existente espera miembroIds/rolBonusId planos — se adapta acá.
+function aFormaFrontend(grupo) {
+    if (!grupo) return grupo;
+    return {
+        ...grupo,
+        miembroIds: (grupo.miembros ?? []).map((u) => u.id),
+        rolBonusId: grupo.rolBonus?.id ?? "",
+    };
+}
+
+function aFormaBackend(datos) {
+    return {
+        nombre: datos.nombre,
+        descripcion: datos.descripcion,
+        miembros: (datos.miembroIds ?? []).map((id) => ({ id })),
+        rolBonus: datos.rolBonusId ? { id: datos.rolBonusId } : null,
+    };
+}
 
 export async function obtenerGrupos() {
-    return obtener("grupos", []);
+    const respuesta = await axios.get(API);
+    return respuesta.data.map(aFormaFrontend);
 }
 
 export async function crearGrupo(datos) {
-    const grupos = obtener("grupos", []);
-
-    const nuevo = {
-        id: generarId(),
-        nombre: datos.nombre.trim(),
-        descripcion: datos.descripcion?.trim() ?? "",
-        miembroIds: datos.miembroIds ?? [],
-        rolBonusId: datos.rolBonusId || null,
-        creadoEn: new Date().toISOString(),
-    };
-
-    guardar("grupos", [...grupos, nuevo]);
-    return nuevo;
+    try {
+        const respuesta = await axios.post(API, aFormaBackend(datos));
+        return aFormaFrontend(respuesta.data);
+    } catch (error) {
+        throw new Error(mensajeError(error, "No se pudo crear el grupo."), { cause: error });
+    }
 }
 
-export async function actualizarGrupo(id, cambios) {
-    const grupos = obtener("grupos", []);
-
-    let actualizado = null;
-    const siguientes = grupos.map((g) => {
-        if (g.id !== id) return g;
-        actualizado = { ...g, ...cambios };
-        return actualizado;
-    });
-
-    guardar("grupos", siguientes);
-    return actualizado;
+export async function actualizarGrupo(id, datos) {
+    try {
+        const respuesta = await axios.put(`${API}/${id}`, aFormaBackend(datos));
+        return aFormaFrontend(respuesta.data);
+    } catch (error) {
+        throw new Error(mensajeError(error, "No se pudo actualizar el grupo."), { cause: error });
+    }
 }
 
 export async function eliminarGrupo(id) {
-    const grupos = obtener("grupos", []);
-    guardar("grupos", grupos.filter((g) => g.id !== id));
-
-    const usuarios = obtener("usuarios", []);
-    guardar(
-        "usuarios",
-        usuarios.map((u) => ({ ...u, grupoIds: u.grupoIds.filter((gid) => gid !== id) }))
-    );
+    try {
+        await axios.delete(`${API}/${id}`);
+    } catch (error) {
+        throw new Error(mensajeError(error, "No se pudo eliminar el grupo."), { cause: error });
+    }
 }

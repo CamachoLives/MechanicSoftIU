@@ -1,57 +1,35 @@
-import { obtener, guardar, generarId } from "../utils/storage";
+import axios from "axios";
+import { mensajeError } from "../utils/apiError";
+
+const API = "http://localhost:9769/api/roles";
 
 export async function obtenerRoles() {
-    return obtener("roles", []);
+    const respuesta = await axios.get(API);
+    return respuesta.data;
 }
 
 export async function crearRol(datos) {
-    const roles = obtener("roles", []);
-
-    const nuevo = {
-        id: generarId(),
-        nombre: datos.nombre.trim(),
-        descripcion: datos.descripcion?.trim() ?? "",
-        permisos: datos.permisos ?? [],
-        colorBadge: datos.colorBadge ?? "#93c5fd",
-        esSistema: false,
-        creadoEn: new Date().toISOString(),
-    };
-
-    guardar("roles", [...roles, nuevo]);
-    return nuevo;
+    try {
+        const respuesta = await axios.post(API, datos);
+        return respuesta.data;
+    } catch (error) {
+        throw new Error(mensajeError(error, "No se pudo crear el rol."), { cause: error });
+    }
 }
 
-export async function actualizarRol(id, cambios) {
-    const roles = obtener("roles", []);
-
-    let actualizado = null;
-    const siguientes = roles.map((r) => {
-        if (r.id !== id) return r;
-        actualizado = { ...r, ...cambios, id: r.id, esSistema: r.esSistema };
-        return actualizado;
-    });
-
-    guardar("roles", siguientes);
-    return actualizado;
+export async function actualizarRol(id, datos) {
+    try {
+        const respuesta = await axios.put(`${API}/${id}`, datos);
+        return respuesta.data;
+    } catch (error) {
+        throw new Error(mensajeError(error, "No se pudo actualizar el rol."), { cause: error });
+    }
 }
 
 export async function eliminarRol(id) {
-    const roles = obtener("roles", []);
-    const rol = roles.find((r) => r.id === id);
-
-    if (rol?.esSistema) {
-        throw new Error("Este rol es del sistema y no puede eliminarse.");
+    try {
+        await axios.delete(`${API}/${id}`);
+    } catch (error) {
+        throw new Error(mensajeError(error, "No se pudo eliminar el rol."), { cause: error });
     }
-
-    const usuarios = obtener("usuarios", []);
-    if (usuarios.some((u) => u.rolId === id)) {
-        throw new Error("No se puede eliminar: hay usuarios con este rol asignado.");
-    }
-
-    const grupos = obtener("grupos", []);
-    if (grupos.some((g) => g.rolBonusId === id)) {
-        throw new Error("No se puede eliminar: hay grupos que otorgan este rol como bono.");
-    }
-
-    guardar("roles", roles.filter((r) => r.id !== id));
 }
