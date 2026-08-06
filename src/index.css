@@ -139,6 +139,15 @@ textarea {
   gap: 16px;
 }
 
+.aviso-vacio {
+  color: var(--texto-muted);
+  font-size: 14px;
+  background: var(--glass-bg);
+  border: 1px dashed var(--glass-border);
+  border-radius: var(--radio-sm);
+  padding: 16px;
+}
+
 /* ---------- Tabla de datos (Vehículos, Usuarios, Roles, Grupos) ---------- */
 
 .tabla-encabezado {
