@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TbSearch, TbCalendar, TbFilterOff, TbEye, TbEdit, TbTrash } from "react-icons/tb";
+import { TbSearch, TbCalendar, TbFilterOff, TbEye, TbEdit, TbUserCheck, TbUserX } from "react-icons/tb";
 import "./ListaVehiculos.css";
 
 import ModalVehiculo from "../../components/ModalVehiculo/ModalVehiculo";
@@ -7,11 +7,11 @@ import EditarVehiculoModal from "./EditarVehiculoModal";
 
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
-import ConfirmModal from "../../components/Modal/ConfirmModal";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
+import Badge from "../../components/Badge/Badge";
 
-import { obtenerVehiculos, eliminarVehiculo } from "../../services/vehiculoService";
+import { obtenerVehiculos, cambiarEstadoVehiculo } from "../../services/vehiculoService";
 
 export default function ListaVehiculos() {
     const { tienePermiso } = useAuth();
@@ -22,14 +22,12 @@ export default function ListaVehiculos() {
     const [fecha, setFecha] = useState("");
     const [cargando, setCargando] = useState(true);
     const [errorCarga, setErrorCarga] = useState("");
+    const [procesando, setProcesando] = useState(false);
 
     const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
     const [vehiculoParaEditar, setVehiculoParaEditar] = useState(null);
-    const [vehiculoParaEliminar, setVehiculoParaEliminar] = useState(null);
-    const [eliminando, setEliminando] = useState(false);
 
     const puedeEditar = tienePermiso("vehiculos.editar");
-    const puedeEliminar = tienePermiso("vehiculos.eliminar");
 
     const cargarVehiculos = async () => {
         setCargando(true);
@@ -51,25 +49,18 @@ export default function ListaVehiculos() {
         })();
     }, []);
 
-    const confirmarEliminar = async () => {
-        setEliminando(true);
+    const alternarActivo = async (vehiculo) => {
+        setProcesando(true);
         try {
-            await eliminarVehiculo(vehiculoParaEliminar.id);
-            toast.exito(`Se eliminó el vehículo ${vehiculoParaEliminar.placa}.`);
-            setVehiculoParaEliminar(null);
+            await cambiarEstadoVehiculo(vehiculo.id, !vehiculo.activo);
+            toast.exito(`${vehiculo.placa} quedó ${vehiculo.activo ? "inactivo" : "activo"}.`);
             await cargarVehiculos();
         } catch (error) {
             console.error(error);
-            toast.error("No fue posible eliminar el vehículo.");
+            toast.error("No fue posible cambiar el estado del vehículo.");
         } finally {
-            setEliminando(false);
+            setProcesando(false);
         }
-    };
-
-    const resumirMotivo = (texto) => {
-        if (!texto) return "";
-        const palabras = texto.split(" ");
-        return palabras.length <= 3 ? texto : palabras.slice(0, 3).join(" ") + "...";
     };
 
     const vehiculosFiltrados = vehiculos
@@ -122,14 +113,14 @@ export default function ListaVehiculos() {
                     <thead>
                         <tr>
                             <th>Placa</th>
-                            <th>Marca</th>
-                            <th>Modelo</th>
+                            <th>Marca / Modelo</th>
+                            <th>Año</th>
                             <th>Color</th>
                             <th>Km</th>
                             <th>Propietario</th>
                             <th>Teléfono</th>
                             <th>Fecha</th>
-                            <th>Motivo</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -151,18 +142,24 @@ export default function ListaVehiculos() {
                             vehiculosFiltrados.map((vehiculo) => (
                                 <tr key={vehiculo.id}>
                                     <td>{vehiculo.placa}</td>
-                                    <td>{vehiculo.marca}</td>
-                                    <td>{vehiculo.modelo}</td>
+                                    <td>
+                                        {vehiculo.marca} {vehiculo.modelo}
+                                    </td>
+                                    <td>{vehiculo.anio}</td>
                                     <td>{vehiculo.color}</td>
                                     <td>{vehiculo.kilometraje}</td>
-                                    <td>{vehiculo.propietarioActual}</td>
-                                    <td>{vehiculo.telefonoActual}</td>
+                                    <td>{vehiculo.cliente?.nombre ?? "—"}</td>
+                                    <td>{vehiculo.cliente?.telefono ?? "—"}</td>
                                     <td>
                                         {vehiculo.createdAt
                                             ? new Date(vehiculo.createdAt).toLocaleDateString()
                                             : ""}
                                     </td>
-                                    <td>{resumirMotivo(vehiculo.motivoIngreso)}</td>
+                                    <td>
+                                        <Badge tono={vehiculo.activo === false ? "neutral" : "success"}>
+                                            {vehiculo.activo === false ? "Inactivo" : "Activo"}
+                                        </Badge>
+                                    </td>
                                     <td>
                                         <div className="tabla-acciones">
                                             <Button
@@ -183,13 +180,14 @@ export default function ListaVehiculos() {
                                                 </Button>
                                             )}
 
-                                            {puedeEliminar && (
+                                            {puedeEditar && (
                                                 <Button
-                                                    variante="peligro"
-                                                    icono={<TbTrash />}
-                                                    onClick={() => setVehiculoParaEliminar(vehiculo)}
+                                                    variante={vehiculo.activo === false ? "secundario" : "peligro"}
+                                                    icono={vehiculo.activo === false ? <TbUserCheck /> : <TbUserX />}
+                                                    onClick={() => alternarActivo(vehiculo)}
+                                                    disabled={procesando}
                                                 >
-                                                    Eliminar
+                                                    {vehiculo.activo === false ? "Activar" : "Desactivar"}
                                                 </Button>
                                             )}
                                         </div>
@@ -214,17 +212,6 @@ export default function ListaVehiculos() {
                     setVehiculoParaEditar(null);
                     await cargarVehiculos();
                 }}
-            />
-
-            <ConfirmModal
-                abierto={Boolean(vehiculoParaEliminar)}
-                titulo="Eliminar vehículo"
-                mensaje={`¿Deseas eliminar el vehículo "${vehiculoParaEliminar?.placa}"? Esta acción no se puede deshacer.`}
-                textoConfirmar="Eliminar"
-                variantePeligro
-                cargando={eliminando}
-                confirmar={confirmarEliminar}
-                cancelar={() => setVehiculoParaEliminar(null)}
             />
         </div>
     );
