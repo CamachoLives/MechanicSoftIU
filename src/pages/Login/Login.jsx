@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { TbUser, TbLock, TbEye, TbEyeOff, TbLogin2, TbShieldCheck, TbAlertCircle, TbMotorbike } from "react-icons/tb";
 import { useAuth } from "../../context/AuthContext";
-import { USUARIOS_PRUEBA } from "../../data/seed";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import "./Login.css";
+
+// Coinciden con lo que siembra DatosInicialesRunner en el backend al arrancar por primera vez.
+const USUARIOS_PRUEBA = [
+    { usuario: "admin", contrasena: "admin123", nombre: "Laura Gómez", rol: "Administrador" },
+    { usuario: "recepcion", contrasena: "recepcion123", nombre: "María Torres", rol: "Recepcionista" },
+    { usuario: "mecanico", contrasena: "mecanico123", nombre: "Jorge Ramírez", rol: "Mecánico" },
+];
 
 export default function Login() {
     const { login } = useAuth();
@@ -22,11 +28,7 @@ export default function Login() {
         const resultado = await login(usuarioIntento, contrasenaIntento);
 
         if (!resultado.ok) {
-            setError(
-                resultado.error === "usuario_inactivo"
-                    ? "Este usuario está inactivo. Contacta a un administrador."
-                    : "Usuario o contraseña incorrectos."
-            );
+            setError(resultado.error);
             setCargando(false);
         }
         // Si el login es exitoso, App.jsx detecta la sesión y reemplaza esta pantalla.
@@ -117,7 +119,8 @@ export default function Login() {
                     </h3>
                     <p className="login-prueba-nota">
                         Entorno de demostración: un clic inicia sesión con ese usuario. Las
-                        contraseñas viven sin cifrar solo en este navegador.
+                        contraseñas ya viven cifradas en la base de datos, pero la sesión sigue
+                        siendo simple (sin tokens), pensada para desarrollo.
                     </p>
                     <div className="login-prueba-lista">
                         {USUARIOS_PRUEBA.map((credencial) => (

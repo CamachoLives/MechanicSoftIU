@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react";
-import { TbUserPlus, TbEdit, TbTrash, TbUserCheck, TbUserX } from "react-icons/tb";
+import { TbUserPlus, TbEdit, TbUserCheck, TbUserX } from "react-icons/tb";
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
-import {
-    obtenerUsuarios,
-    eliminarUsuario,
-    actualizarUsuario,
-} from "../../services/usuarioService";
+import { obtenerUsuarios, cambiarEstadoUsuario } from "../../services/usuarioService";
 import { obtenerRoles } from "../../services/rolService";
 import { obtenerGrupos } from "../../services/grupoService";
 import Button from "../../components/Button/Button";
 import Badge from "../../components/Badge/Badge";
-import ConfirmModal from "../../components/Modal/ConfirmModal";
 import UsuarioFormModal from "./UsuarioFormModal";
 
 export default function UsuariosTab() {
@@ -25,12 +20,10 @@ export default function UsuariosTab() {
 
     // undefined = modal cerrado, null = creando, objeto = editando
     const [usuarioEnEdicion, setUsuarioEnEdicion] = useState(undefined);
-    const [usuarioParaEliminar, setUsuarioParaEliminar] = useState(null);
     const [procesando, setProcesando] = useState(false);
 
     const puedeCrear = tienePermiso("usuarios.crear");
     const puedeEditar = tienePermiso("usuarios.editar");
-    const puedeEliminar = tienePermiso("usuarios.eliminar");
 
     const cargar = async () => {
         setCargando(true);
@@ -48,8 +41,10 @@ export default function UsuariosTab() {
     }, []);
 
     const nombreRol = (rolId) => roles.find((r) => r.id === rolId)?.nombre ?? "—";
+    // El backend guarda la membresía en el grupo (miembroIds), no en el usuario:
+    // se invierte la búsqueda para saber a qué grupos pertenece cada usuario.
     const gruposDe = (usuario) =>
-        grupos.filter((g) => usuario.grupoIds?.includes(g.id)).map((g) => g.nombre);
+        grupos.filter((g) => g.miembroIds?.includes(usuario.id)).map((g) => g.nombre);
 
     const alGuardar = async () => {
         setUsuarioEnEdicion(undefined);
@@ -59,25 +54,11 @@ export default function UsuariosTab() {
     const alternarActivo = async (usuario) => {
         setProcesando(true);
         try {
-            await actualizarUsuario(usuario.id, { activo: !usuario.activo });
+            await cambiarEstadoUsuario(usuario.id, !usuario.activo);
             toast.exito(`${usuario.nombre} quedó ${usuario.activo ? "inactivo" : "activo"}.`);
             await cargar();
         } catch (error) {
             toast.error(error.message ?? "No se pudo cambiar el estado.");
-        } finally {
-            setProcesando(false);
-        }
-    };
-
-    const confirmarEliminar = async () => {
-        setProcesando(true);
-        try {
-            await eliminarUsuario(usuarioParaEliminar.id);
-            toast.exito(`Se eliminó a ${usuarioParaEliminar.nombre}.`);
-            setUsuarioParaEliminar(null);
-            await cargar();
-        } catch (error) {
-            toast.error(error.message ?? "No se pudo eliminar el usuario.");
         } finally {
             setProcesando(false);
         }
@@ -150,7 +131,7 @@ export default function UsuariosTab() {
                                                 )}
                                                 {puedeEditar && (
                                                     <Button
-                                                        variante="secundario"
+                                                        variante={usuario.activo ? "peligro" : "secundario"}
                                                         icono={usuario.activo ? <TbUserX /> : <TbUserCheck />}
                                                         onClick={() => alternarActivo(usuario)}
                                                         disabled={esUsuarioActual || procesando}
@@ -161,21 +142,6 @@ export default function UsuariosTab() {
                                                         }
                                                     >
                                                         {usuario.activo ? "Desactivar" : "Activar"}
-                                                    </Button>
-                                                )}
-                                                {puedeEliminar && (
-                                                    <Button
-                                                        variante="peligro"
-                                                        icono={<TbTrash />}
-                                                        onClick={() => setUsuarioParaEliminar(usuario)}
-                                                        disabled={esUsuarioActual}
-                                                        title={
-                                                            esUsuarioActual
-                                                                ? "No puedes eliminar tu propia cuenta"
-                                                                : ""
-                                                        }
-                                                    >
-                                                        Eliminar
                                                     </Button>
                                                 )}
                                             </div>
@@ -191,20 +157,8 @@ export default function UsuariosTab() {
             <UsuarioFormModal
                 usuario={usuarioEnEdicion}
                 roles={roles}
-                grupos={grupos}
                 cerrar={() => setUsuarioEnEdicion(undefined)}
                 alGuardar={alGuardar}
-            />
-
-            <ConfirmModal
-                abierto={Boolean(usuarioParaEliminar)}
-                titulo="Eliminar usuario"
-                mensaje={`¿Seguro que deseas eliminar a "${usuarioParaEliminar?.nombre}"? Esta acción no se puede deshacer.`}
-                textoConfirmar="Eliminar"
-                variantePeligro
-                cargando={procesando}
-                confirmar={confirmarEliminar}
-                cancelar={() => setUsuarioParaEliminar(null)}
             />
         </div>
     );
