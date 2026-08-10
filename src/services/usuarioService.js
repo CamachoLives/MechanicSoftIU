@@ -1,7 +1,7 @@
-import axios from "axios";
+import api from "./api";
 import { mensajeError } from "../utils/apiError";
 
-const API = "http://localhost:9769/api/usuarios";
+const API = "/api/usuarios";
 
 // El backend anida el rol completo ({rol: {id, nombre, permisos...}}); la UI
 // existente espera un rolId plano — se adapta acá para no tocar esos componentes.
@@ -21,18 +21,18 @@ function aFormaBackend(datos) {
 }
 
 export async function obtenerUsuarios() {
-    const respuesta = await axios.get(API);
+    const respuesta = await api.get(API);
     return respuesta.data.map(aFormaFrontend);
 }
 
 export async function buscarUsuarioPorId(id) {
-    const respuesta = await axios.get(`${API}/${id}`);
+    const respuesta = await api.get(`${API}/${id}`);
     return aFormaFrontend(respuesta.data);
 }
 
 export async function crearUsuario(datos) {
     try {
-        const respuesta = await axios.post(API, aFormaBackend(datos));
+        const respuesta = await api.post(API, aFormaBackend(datos));
         return aFormaFrontend(respuesta.data);
     } catch (error) {
         throw new Error(mensajeError(error, "No se pudo crear el usuario."), { cause: error });
@@ -41,7 +41,7 @@ export async function crearUsuario(datos) {
 
 export async function actualizarUsuario(id, cambios) {
     try {
-        const respuesta = await axios.put(`${API}/${id}`, aFormaBackend(cambios));
+        const respuesta = await api.put(`${API}/${id}`, aFormaBackend(cambios));
         return aFormaFrontend(respuesta.data);
     } catch (error) {
         throw new Error(mensajeError(error, "No se pudo actualizar el usuario."), { cause: error });
@@ -50,7 +50,7 @@ export async function actualizarUsuario(id, cambios) {
 
 export async function cambiarEstadoUsuario(id, activo) {
     try {
-        const respuesta = await axios.patch(`${API}/${id}/estado`, { activo });
+        const respuesta = await api.patch(`${API}/${id}/estado`, { activo });
         return aFormaFrontend(respuesta.data);
     } catch (error) {
         throw new Error(mensajeError(error, "No se pudo cambiar el estado del usuario."), { cause: error });
