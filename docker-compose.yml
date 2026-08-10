@@ -1,5 +1,10 @@
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        # Se puede sobreescribir con "VITE_API_URL=http://mi-backend:9769 docker compose up --build"
+        # o definiendo VITE_API_URL en un archivo .env junto a este compose.
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:9769}
     ports:
       - "8080:80"
