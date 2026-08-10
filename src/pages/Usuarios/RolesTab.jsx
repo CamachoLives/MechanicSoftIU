@@ -3,6 +3,7 @@ import { TbShieldPlus, TbEdit, TbTrash, TbLock } from "react-icons/tb";
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
 import { obtenerRoles, eliminarRol } from "../../services/rolService";
+import { mensajeError } from "../../utils/apiError";
 import Button from "../../components/Button/Button";
 import Badge from "../../components/Badge/Badge";
 import ConfirmModal from "../../components/Modal/ConfirmModal";
@@ -24,14 +25,20 @@ export default function RolesTab() {
 
     const cargar = async () => {
         setCargando(true);
-        setRoles(await obtenerRoles());
-        setCargando(false);
+        try {
+            setRoles(await obtenerRoles());
+        } catch (error) {
+            toast.error(mensajeError(error, "No se pudo cargar los roles."));
+        } finally {
+            setCargando(false);
+        }
     };
 
     useEffect(() => {
         (async () => {
             await cargar();
         })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const confirmarEliminar = async () => {

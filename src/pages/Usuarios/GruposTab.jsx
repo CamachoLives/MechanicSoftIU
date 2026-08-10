@@ -5,6 +5,7 @@ import { useToast } from "../../context/ToastContext";
 import { obtenerGrupos, eliminarGrupo } from "../../services/grupoService";
 import { obtenerUsuarios } from "../../services/usuarioService";
 import { obtenerRoles } from "../../services/rolService";
+import { mensajeError } from "../../utils/apiError";
 import Button from "../../components/Button/Button";
 import Badge from "../../components/Badge/Badge";
 import ConfirmModal from "../../components/Modal/ConfirmModal";
@@ -28,17 +29,23 @@ export default function GruposTab() {
 
     const cargar = async () => {
         setCargando(true);
-        const [g, u, r] = await Promise.all([obtenerGrupos(), obtenerUsuarios(), obtenerRoles()]);
-        setGrupos(g);
-        setUsuarios(u);
-        setRoles(r);
-        setCargando(false);
+        try {
+            const [g, u, r] = await Promise.all([obtenerGrupos(), obtenerUsuarios(), obtenerRoles()]);
+            setGrupos(g);
+            setUsuarios(u);
+            setRoles(r);
+        } catch (error) {
+            toast.error(mensajeError(error, "No se pudo cargar los grupos."));
+        } finally {
+            setCargando(false);
+        }
     };
 
     useEffect(() => {
         (async () => {
             await cargar();
         })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const nombresMiembros = (grupo) =>

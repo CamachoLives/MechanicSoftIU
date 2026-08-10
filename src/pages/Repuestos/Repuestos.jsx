@@ -8,6 +8,7 @@ import {
     registrarEntradaRepuesto,
     registrarSalidaRepuesto,
 } from "../../services/repuestoService";
+import { mensajeError } from "../../utils/apiError";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import Badge from "../../components/Badge/Badge";
@@ -37,6 +38,8 @@ export default function Repuestos() {
         setCargando(true);
         try {
             setRepuestos(await obtenerRepuestos(texto));
+        } catch (error) {
+            toast.error(mensajeError(error, "No se pudo cargar los repuestos."));
         } finally {
             setCargando(false);
         }
@@ -46,6 +49,7 @@ export default function Repuestos() {
         (async () => {
             await cargar();
         })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const alBuscar = async (e) => {

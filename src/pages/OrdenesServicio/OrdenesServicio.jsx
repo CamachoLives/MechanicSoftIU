@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { TbPlus, TbEye } from "react-icons/tb";
 import { useAuth } from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext";
 import { obtenerOrdenes } from "../../services/ordenServicioService";
+import { mensajeError } from "../../utils/apiError";
 import Button from "../../components/Button/Button";
 import Badge from "../../components/Badge/Badge";
 import Select from "../../components/Select/Select";
@@ -14,6 +16,7 @@ const formatoMoneda = new Intl.NumberFormat("es-CO", { style: "currency", curren
 
 export default function OrdenesServicio() {
     const { tienePermiso } = useAuth();
+    const toast = useToast();
 
     const [ordenes, setOrdenes] = useState([]);
     const [filtroEstado, setFiltroEstado] = useState("");
@@ -27,6 +30,8 @@ export default function OrdenesServicio() {
         setCargando(true);
         try {
             setOrdenes(await obtenerOrdenes({ estado: estado || undefined }));
+        } catch (error) {
+            toast.error(mensajeError(error, "No se pudo cargar las órdenes."));
         } finally {
             setCargando(false);
         }
@@ -36,6 +41,7 @@ export default function OrdenesServicio() {
         (async () => {
             await cargar();
         })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (ordenSeleccionadaId) {

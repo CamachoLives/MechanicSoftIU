@@ -5,6 +5,7 @@ import { useToast } from "../../context/ToastContext";
 import { obtenerUsuarios, cambiarEstadoUsuario } from "../../services/usuarioService";
 import { obtenerRoles } from "../../services/rolService";
 import { obtenerGrupos } from "../../services/grupoService";
+import { mensajeError } from "../../utils/apiError";
 import Button from "../../components/Button/Button";
 import Badge from "../../components/Badge/Badge";
 import UsuarioFormModal from "./UsuarioFormModal";
@@ -27,17 +28,23 @@ export default function UsuariosTab() {
 
     const cargar = async () => {
         setCargando(true);
-        const [u, r, g] = await Promise.all([obtenerUsuarios(), obtenerRoles(), obtenerGrupos()]);
-        setUsuarios(u);
-        setRoles(r);
-        setGrupos(g);
-        setCargando(false);
+        try {
+            const [u, r, g] = await Promise.all([obtenerUsuarios(), obtenerRoles(), obtenerGrupos()]);
+            setUsuarios(u);
+            setRoles(r);
+            setGrupos(g);
+        } catch (error) {
+            toast.error(mensajeError(error, "No se pudo cargar los usuarios."));
+        } finally {
+            setCargando(false);
+        }
     };
 
     useEffect(() => {
         (async () => {
             await cargar();
         })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const nombreRol = (rolId) => roles.find((r) => r.id === rolId)?.nombre ?? "—";

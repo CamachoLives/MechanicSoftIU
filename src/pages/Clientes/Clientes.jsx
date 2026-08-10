@@ -7,6 +7,7 @@ import {
     cambiarEstadoCliente,
     obtenerVehiculosDeCliente,
 } from "../../services/clienteService";
+import { mensajeError } from "../../utils/apiError";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import Badge from "../../components/Badge/Badge";
@@ -36,6 +37,8 @@ export default function Clientes() {
         setCargando(true);
         try {
             setClientes(await obtenerClientes(texto));
+        } catch (error) {
+            toast.error(mensajeError(error, "No se pudo cargar los clientes."));
         } finally {
             setCargando(false);
         }
@@ -45,6 +48,7 @@ export default function Clientes() {
         (async () => {
             await cargar();
         })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const alBuscar = async (e) => {
