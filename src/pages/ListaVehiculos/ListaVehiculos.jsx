@@ -34,7 +34,7 @@ export default function ListaVehiculos() {
         try {
             setErrorCarga("");
             const respuesta = await obtenerVehiculos();
-            setVehiculos(respuesta?.data || []);
+            setVehiculos(respuesta || []);
         } catch (error) {
             console.error(error);
             setErrorCarga("No se pudo conectar con el backend de vehículos (localhost:9769).");
@@ -56,8 +56,7 @@ export default function ListaVehiculos() {
             toast.exito(`${vehiculo.placa} quedó ${vehiculo.activo ? "inactivo" : "activo"}.`);
             await cargarVehiculos();
         } catch (error) {
-            console.error(error);
-            toast.error("No fue posible cambiar el estado del vehículo.");
+            toast.error(error.message ?? "No fue posible cambiar el estado del vehículo.");
         } finally {
             setProcesando(false);
         }

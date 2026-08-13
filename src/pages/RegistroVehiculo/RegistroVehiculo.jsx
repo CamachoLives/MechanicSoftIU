@@ -77,7 +77,7 @@ export default function RegistroVehiculo() {
             toast.exito("Vehículo registrado correctamente.");
             setVehiculo(VACIO);
         } catch (error) {
-            toast.error(error.response?.data?.message ?? "Ocurrió un error al registrar el vehículo.");
+            toast.error(error.message ?? "Ocurrió un error al registrar el vehículo.");
         } finally {
             setGuardando(false);
         }

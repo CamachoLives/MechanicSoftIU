@@ -21,7 +21,7 @@ export default function NuevaOrdenModal({ cerrar, alCrear }) {
         (async () => {
             try {
                 const respuesta = await obtenerVehiculos();
-                setVehiculos((respuesta?.data ?? []).filter((v) => v.activo !== false));
+                setVehiculos((respuesta ?? []).filter((v) => v.activo !== false));
             } catch {
                 toast.error("No se pudo cargar la lista de vehículos.");
             } finally {

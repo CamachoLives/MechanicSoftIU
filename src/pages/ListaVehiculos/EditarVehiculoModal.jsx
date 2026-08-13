@@ -71,7 +71,7 @@ export default function EditarVehiculoModal({ vehiculo, cerrar, alGuardar }) {
             toast.exito(`Se actualizó ${form.placa}.`);
             alGuardar();
         } catch (error) {
-            toast.error(error?.response?.data?.message ?? "No se pudo actualizar el vehículo.");
+            toast.error(error.message ?? "No se pudo actualizar el vehículo.");
         } finally {
             setGuardando(false);
         }
