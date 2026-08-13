@@ -99,7 +99,15 @@ export default function EditarVehiculoModal({ vehiculo, cerrar, alGuardar }) {
                 onSubmit={alEnviar}
                 className="formulario-vehiculo-editar"
             >
-                <Input label="Placa" required value={form.placa} onChange={actualizarCampo("placa")} />
+                <Input
+                    label="Placa"
+                    required
+                    pattern="[A-Za-z0-9-]{4,10}"
+                    maxLength={10}
+                    title="Solo letras, números y guiones, 4 a 10 caracteres"
+                    value={form.placa}
+                    onChange={actualizarCampo("placa")}
+                />
                 <Input label="Marca" required value={form.marca} onChange={actualizarCampo("marca")} />
                 <Input label="Modelo" required value={form.modelo} onChange={actualizarCampo("modelo")} />
                 <Input

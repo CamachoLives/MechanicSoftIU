@@ -91,7 +91,16 @@ export default function RegistroVehiculo() {
                 <div className="card grande">
                     <h2>Datos del vehículo</h2>
                     <div className="grid-form">
-                        <Input label="Placa" name="placa" value={vehiculo.placa} onChange={cambiarValor} required />
+                        <Input
+                            label="Placa"
+                            name="placa"
+                            value={vehiculo.placa}
+                            onChange={cambiarValor}
+                            required
+                            pattern="[A-Za-z0-9-]{4,10}"
+                            maxLength={10}
+                            title="Solo letras, números y guiones, 4 a 10 caracteres"
+                        />
                         <Input label="Marca" name="marca" value={vehiculo.marca} onChange={cambiarValor} required />
                         <Input label="Modelo" name="modelo" value={vehiculo.modelo} onChange={cambiarValor} required />
                         <Input
