@@ -2,15 +2,21 @@ import { useEffect, useState } from "react";
 import { TbKey } from "react-icons/tb";
 import { permisosPorModulo } from "../../data/permisos";
 import { obtenerRoles } from "../../services/rolService";
+import { mensajeError } from "../../utils/apiError";
+import { useToast } from "../../context/ToastContext";
 import Badge from "../../components/Badge/Badge";
 
 const GRUPOS_PERMISOS = permisosPorModulo();
 
 export default function PermisosTab() {
+    const toast = useToast();
     const [roles, setRoles] = useState([]);
 
     useEffect(() => {
-        obtenerRoles().then(setRoles);
+        obtenerRoles()
+            .then(setRoles)
+            .catch((error) => toast.error(mensajeError(error, "No se pudo cargar los roles.")));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const rolesConPermiso = (clave) => roles.filter((r) => r.permisos.includes(clave));
