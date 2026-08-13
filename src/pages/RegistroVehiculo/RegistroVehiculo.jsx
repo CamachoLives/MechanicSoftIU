@@ -107,6 +107,8 @@ export default function RegistroVehiculo() {
                             label="Año"
                             type="number"
                             name="anio"
+                            min="1900"
+                            max="2100"
                             value={vehiculo.anio}
                             onChange={cambiarValor}
                             required

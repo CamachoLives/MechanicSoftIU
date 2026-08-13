@@ -113,6 +113,8 @@ export default function EditarVehiculoModal({ vehiculo, cerrar, alGuardar }) {
                 <Input
                     label="Año"
                     type="number"
+                    min="1900"
+                    max="2100"
                     required
                     value={form.anio}
                     onChange={actualizarCampo("anio")}
