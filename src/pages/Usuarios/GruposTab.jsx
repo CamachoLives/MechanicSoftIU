@@ -84,10 +84,10 @@ export default function GruposTab() {
                 <table className="tabla-datos">
                     <thead>
                         <tr>
-                            <th>Grupo</th>
-                            <th>Miembros</th>
-                            <th>Rol bono</th>
-                            <th>Acciones</th>
+                            <th scope="col">Grupo</th>
+                            <th scope="col">Miembros</th>
+                            <th scope="col">Rol bono</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -72,10 +72,10 @@ export default function RolesTab() {
                 <table className="tabla-datos">
                     <thead>
                         <tr>
-                            <th>Rol</th>
-                            <th>Permisos</th>
-                            <th>Tipo</th>
-                            <th>Acciones</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Permisos</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

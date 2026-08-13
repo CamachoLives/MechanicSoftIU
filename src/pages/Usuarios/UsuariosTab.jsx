@@ -88,12 +88,12 @@ export default function UsuariosTab() {
                 <table className="tabla-datos">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Usuario</th>
-                            <th>Rol</th>
-                            <th>Grupos</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Grupos</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

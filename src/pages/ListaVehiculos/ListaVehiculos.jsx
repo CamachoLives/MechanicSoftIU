@@ -111,16 +111,16 @@ export default function ListaVehiculos() {
                 <table className="tabla-datos">
                     <thead>
                         <tr>
-                            <th>Placa</th>
-                            <th>Marca / Modelo</th>
-                            <th>Año</th>
-                            <th>Color</th>
-                            <th>Km</th>
-                            <th>Propietario</th>
-                            <th>Teléfono</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
+                            <th scope="col">Placa</th>
+                            <th scope="col">Marca / Modelo</th>
+                            <th scope="col">Año</th>
+                            <th scope="col">Color</th>
+                            <th scope="col">Km</th>
+                            <th scope="col">Propietario</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
 

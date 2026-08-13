@@ -92,13 +92,13 @@ export default function OrdenesServicio() {
                     <table className="tabla-datos">
                         <thead>
                             <tr>
-                                <th>Orden</th>
-                                <th>Vehículo</th>
-                                <th>Cliente</th>
-                                <th>Estado</th>
-                                <th>Valor total</th>
-                                <th>Ingreso</th>
-                                <th>Acciones</th>
+                                <th scope="col">Orden</th>
+                                <th scope="col">Vehículo</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Valor total</th>
+                                <th scope="col">Ingreso</th>
+                                <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>

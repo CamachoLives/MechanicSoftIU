@@ -336,11 +336,11 @@ export default function OrdenDetalle({ ordenId, volver }) {
                         <table className="tabla-datos tabla-datos-compacta">
                             <thead>
                                 <tr>
-                                    <th>Servicio</th>
-                                    <th>Cant.</th>
-                                    <th>Precio</th>
-                                    <th>Subtotal</th>
-                                    {puedeServicios && !esInmutable && <th></th>}
+                                    <th scope="col">Servicio</th>
+                                    <th scope="col">Cant.</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Subtotal</th>
+                                    {puedeServicios && !esInmutable && <th scope="col"></th>}
                                 </tr>
                             </thead>
                             <tbody>
@@ -414,11 +414,11 @@ export default function OrdenDetalle({ ordenId, volver }) {
                         <table className="tabla-datos tabla-datos-compacta">
                             <thead>
                                 <tr>
-                                    <th>Repuesto</th>
-                                    <th>Cant.</th>
-                                    <th>Precio</th>
-                                    <th>Subtotal</th>
-                                    {puedeRepuestos && !esInmutable && <th></th>}
+                                    <th scope="col">Repuesto</th>
+                                    <th scope="col">Cant.</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Subtotal</th>
+                                    {puedeRepuestos && !esInmutable && <th scope="col"></th>}
                                 </tr>
                             </thead>
                             <tbody>

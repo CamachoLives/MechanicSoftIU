@@ -110,13 +110,13 @@ export default function Clientes() {
                 <table className="tabla-datos">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Teléfono</th>
-                            <th>Correo</th>
-                            <th>Registrado</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
+                            <th scope="col">Id</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Registrado</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
