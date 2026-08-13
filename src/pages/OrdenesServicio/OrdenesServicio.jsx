@@ -10,9 +10,9 @@ import Select from "../../components/Select/Select";
 import { ESTADOS_ORDEN } from "./estadosOrden";
 import NuevaOrdenModal from "./NuevaOrdenModal";
 import OrdenDetalle from "./OrdenDetalle";
+import { formatoMoneda } from "../../utils/formato";
 import "./OrdenesServicio.css";
 
-const formatoMoneda = new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
 
 export default function OrdenesServicio() {
     const { tienePermiso } = useAuth();

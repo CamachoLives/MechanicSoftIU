@@ -24,9 +24,9 @@ import { obtenerUsuarios } from "../../services/usuarioService";
 import { obtenerRepuestos } from "../../services/repuestoService";
 import { ESTADOS_ORDEN, TRANSICIONES, ESTADOS_INMUTABLES } from "./estadosOrden";
 import RegistrarPagoModal from "./RegistrarPagoModal";
+import { formatoMoneda } from "../../utils/formato";
 import "./OrdenesServicio.css";
 
-const formatoMoneda = new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
 
 export default function OrdenDetalle({ ordenId, volver }) {
     const { tienePermiso } = useAuth();

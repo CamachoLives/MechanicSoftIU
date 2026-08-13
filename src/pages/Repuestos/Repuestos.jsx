@@ -14,9 +14,9 @@ import Input from "../../components/Input/Input";
 import Badge from "../../components/Badge/Badge";
 import RepuestoFormModal from "./RepuestoFormModal";
 import MovimientoStockModal from "./MovimientoStockModal";
+import { formatoMoneda } from "../../utils/formato";
 import "./Repuestos.css";
 
-const formatoMoneda = new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
 
 export default function Repuestos() {
     const { tienePermiso } = useAuth();
