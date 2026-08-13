@@ -73,18 +73,23 @@ export default function ClienteFormModal({ cliente, cerrar, alGuardar }) {
                 <Input
                     label="Nombre completo"
                     required
+                    maxLength={150}
                     value={form.nombre}
                     onChange={actualizarCampo("nombre")}
                 />
                 <Input
                     label="Teléfono"
                     required
+                    pattern="[0-9+()\s-]{7,20}"
+                    maxLength={20}
+                    title="Solo dígitos y separadores comunes (+, -, paréntesis), 7 a 20 caracteres"
                     value={form.telefono}
                     onChange={actualizarCampo("telefono")}
                 />
                 <Input
                     label="Correo"
                     type="email"
+                    maxLength={150}
                     value={form.correo}
                     onChange={actualizarCampo("correo")}
                     placeholder="Opcional"
