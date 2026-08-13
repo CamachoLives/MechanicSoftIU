@@ -101,8 +101,8 @@ export default function RegistroVehiculo() {
                             maxLength={10}
                             title="Solo letras, números y guiones, 4 a 10 caracteres"
                         />
-                        <Input label="Marca" name="marca" value={vehiculo.marca} onChange={cambiarValor} required />
-                        <Input label="Modelo" name="modelo" value={vehiculo.modelo} onChange={cambiarValor} required />
+                        <Input label="Marca" name="marca" value={vehiculo.marca} onChange={cambiarValor} required maxLength={100} />
+                        <Input label="Modelo" name="modelo" value={vehiculo.modelo} onChange={cambiarValor} required maxLength={100} />
                         <Input
                             label="Año"
                             type="number"
@@ -113,7 +113,7 @@ export default function RegistroVehiculo() {
                             onChange={cambiarValor}
                             required
                         />
-                        <Input label="Color" name="color" value={vehiculo.color} onChange={cambiarValor} required />
+                        <Input label="Color" name="color" value={vehiculo.color} onChange={cambiarValor} required maxLength={50} />
                         <Input
                             label="Kilometraje"
                             type="number"
@@ -137,6 +137,7 @@ export default function RegistroVehiculo() {
                         label="Observaciones"
                         multilinea
                         filas={3}
+                        maxLength={500}
                         name="observaciones"
                         value={vehiculo.observaciones}
                         onChange={cambiarValor}

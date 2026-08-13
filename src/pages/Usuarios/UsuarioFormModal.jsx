@@ -99,24 +99,28 @@ export default function UsuarioFormModal({ usuario, roles, cerrar, alGuardar }) 
                 <Input
                     label="Nombre completo"
                     required
+                    maxLength={150}
                     value={form.nombre}
                     onChange={actualizarCampo("nombre")}
                 />
                 <Input
                     label="Correo"
                     type="email"
+                    maxLength={150}
                     value={form.correo}
                     onChange={actualizarCampo("correo")}
                     placeholder="Opcional"
                 />
                 <Input
                     label="Teléfono"
+                    maxLength={20}
                     value={form.telefono}
                     onChange={actualizarCampo("telefono")}
                     placeholder="Opcional"
                 />
                 <Input
                     label="Cargo"
+                    maxLength={100}
                     value={form.cargo}
                     onChange={actualizarCampo("cargo")}
                     placeholder="Ej. Mecánico de motos, Recepción..."
@@ -124,6 +128,7 @@ export default function UsuarioFormModal({ usuario, roles, cerrar, alGuardar }) 
                 <Input
                     label="Usuario (para iniciar sesión)"
                     required
+                    maxLength={100}
                     value={form.usuario}
                     onChange={actualizarCampo("usuario")}
                 />

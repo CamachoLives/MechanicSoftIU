@@ -108,8 +108,8 @@ export default function EditarVehiculoModal({ vehiculo, cerrar, alGuardar }) {
                     value={form.placa}
                     onChange={actualizarCampo("placa")}
                 />
-                <Input label="Marca" required value={form.marca} onChange={actualizarCampo("marca")} />
-                <Input label="Modelo" required value={form.modelo} onChange={actualizarCampo("modelo")} />
+                <Input label="Marca" required maxLength={100} value={form.marca} onChange={actualizarCampo("marca")} />
+                <Input label="Modelo" required maxLength={100} value={form.modelo} onChange={actualizarCampo("modelo")} />
                 <Input
                     label="Año"
                     type="number"
@@ -119,7 +119,7 @@ export default function EditarVehiculoModal({ vehiculo, cerrar, alGuardar }) {
                     value={form.anio}
                     onChange={actualizarCampo("anio")}
                 />
-                <Input label="Color" required value={form.color} onChange={actualizarCampo("color")} />
+                <Input label="Color" required maxLength={50} value={form.color} onChange={actualizarCampo("color")} />
                 <Input
                     label="Kilometraje"
                     type="number"
@@ -146,6 +146,7 @@ export default function EditarVehiculoModal({ vehiculo, cerrar, alGuardar }) {
                 <Input
                     label="Observaciones"
                     multilinea
+                    maxLength={500}
                     value={form.observaciones}
                     onChange={actualizarCampo("observaciones")}
                     className="formulario-vehiculo-completo"

@@ -380,6 +380,7 @@ export default function OrdenDetalle({ ordenId, volver }) {
                             <form className="orden-detalle-form-linea" onSubmit={agregarServicio}>
                                 <Input
                                     placeholder="Nombre del servicio"
+                                    maxLength={150}
                                     value={nuevoServicio.nombreServicio}
                                     onChange={(e) =>
                                         setNuevoServicio((f) => ({ ...f, nombreServicio: e.target.value }))

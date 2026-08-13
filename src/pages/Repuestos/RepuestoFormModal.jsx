@@ -80,12 +80,13 @@ export default function RepuestoFormModal({ repuesto, cerrar, alGuardar }) {
             }
         >
             <form id="form-repuesto" onSubmit={alEnviar} className="formulario-vertical">
-                <Input label="Nombre" required value={form.nombre} onChange={actualizarCampo("nombre")} />
-                <Input label="Código" required value={form.codigo} onChange={actualizarCampo("codigo")} />
+                <Input label="Nombre" required maxLength={150} value={form.nombre} onChange={actualizarCampo("nombre")} />
+                <Input label="Código" required maxLength={50} value={form.codigo} onChange={actualizarCampo("codigo")} />
                 <Input
                     label="Descripción"
                     multilinea
                     filas={2}
+                    maxLength={300}
                     value={form.descripcion}
                     onChange={actualizarCampo("descripcion")}
                     placeholder="Opcional"
