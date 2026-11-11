@@ -12,6 +12,16 @@ export async function obtenerVehiculos() {
     return respuesta.data;
 }
 
+export async function buscarVehiculoPorPlaca(placa) {
+    try {
+        const respuesta = await api.get(`${API}/placa/${encodeURIComponent(placa)}`);
+        return respuesta.data;
+    } catch (error) {
+        if (error.response?.status === 404) return null;
+        throw error;
+    }
+}
+
 export async function guardarVehiculo(vehiculo) {
     try {
         const respuesta = await api.post(API, vehiculo);

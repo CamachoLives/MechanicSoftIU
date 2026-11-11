@@ -8,6 +8,16 @@ export async function obtenerClientes(buscar) {
     return respuesta.data;
 }
 
+export async function buscarClientePorDocumento(tipoDocumento, numeroDocumento) {
+    try {
+        const respuesta = await api.get(`${API}/por-documento/${tipoDocumento}/${numeroDocumento}`);
+        return respuesta.data;
+    } catch (error) {
+        if (error.response?.status === 404) return null;
+        throw error;
+    }
+}
+
 export async function buscarClientePorId(id) {
     const respuesta = await api.get(`${API}/${id}`);
     return respuesta.data;
