@@ -1,29 +1,24 @@
 import { useEffect, useState } from "react";
-import { TbSearch, TbCalendar, TbFilterOff, TbEye, TbEdit, TbUserCheck, TbUserX } from "react-icons/tb";
+import { TbSearch, TbCalendar, TbFilterOff, TbEye, TbEdit } from "react-icons/tb";
 import "./ListaVehiculos.css";
 
 import ModalVehiculo from "../../components/ModalVehiculo/ModalVehiculo";
 import EditarVehiculoModal from "./EditarVehiculoModal";
 
 import { useAuth } from "../../context/AuthContext";
-import { useToast } from "../../context/ToastContext";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import Badge from "../../components/Badge/Badge";
 
-import { obtenerVehiculos, cambiarEstadoVehiculo } from "../../services/vehiculoService";
+import { obtenerVehiculos } from "../../services/vehiculoService";
 
 export default function ListaVehiculos() {
     const { tienePermiso } = useAuth();
-    const toast = useToast();
 
     const [vehiculos, setVehiculos] = useState([]);
     const [busqueda, setBusqueda] = useState("");
     const [fecha, setFecha] = useState("");
     const [cargando, setCargando] = useState(true);
     const [errorCarga, setErrorCarga] = useState("");
-    const [procesando, setProcesando] = useState(false);
-
     const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
     const [vehiculoParaEditar, setVehiculoParaEditar] = useState(null);
 
@@ -49,22 +44,15 @@ export default function ListaVehiculos() {
         })();
     }, []);
 
-    const alternarActivo = async (vehiculo) => {
-        setProcesando(true);
-        try {
-            await cambiarEstadoVehiculo(vehiculo.id, !vehiculo.activo);
-            toast.exito(`${vehiculo.placa} quedó ${vehiculo.activo ? "inactivo" : "activo"}.`);
-            await cargarVehiculos();
-        } catch (error) {
-            toast.error(error.message ?? "No fue posible cambiar el estado del vehículo.");
-        } finally {
-            setProcesando(false);
-        }
-    };
-
     const vehiculosFiltrados = vehiculos
         .filter((vehiculo) => {
-            const coincidePlaca = vehiculo?.placa?.toLowerCase().includes(busqueda.toLowerCase());
+            const q = busqueda.toLowerCase();
+            const nombreCompleto = `${vehiculo.cliente?.nombre ?? ""} ${vehiculo.cliente?.apellido ?? ""}`.toLowerCase();
+            const coincide =
+                vehiculo?.placa?.toLowerCase().includes(q) ||
+                nombreCompleto.includes(q) ||
+                vehiculo?.marca?.toLowerCase().includes(q) ||
+                vehiculo?.modelo?.toLowerCase().includes(q);
 
             let coincideFecha = true;
             if (fecha) {
@@ -74,7 +62,7 @@ export default function ListaVehiculos() {
                 coincideFecha = fechaVehiculo === fecha;
             }
 
-            return coincidePlaca && coincideFecha;
+            return coincide && coincideFecha;
         })
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -88,7 +76,7 @@ export default function ListaVehiculos() {
                 <Input
                     icono={<TbSearch />}
                     type="text"
-                    placeholder="Buscar por placa..."
+                    placeholder="Buscar por placa, propietario o modelo..."
                     value={busqueda}
                     onChange={(e) => setBusqueda(e.target.value)}
                     className="filtros-campo"
@@ -118,8 +106,7 @@ export default function ListaVehiculos() {
                             <th scope="col">Km</th>
                             <th scope="col">Propietario</th>
                             <th scope="col">Teléfono</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Estado</th>
+                            <th scope="col">Fecha ingreso</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -127,13 +114,13 @@ export default function ListaVehiculos() {
                     <tbody>
                         {cargando ? (
                             <tr>
-                                <td colSpan="10" className="tabla-datos-vacio">
+                                <td colSpan="9" className="tabla-datos-vacio">
                                     Cargando vehículos...
                                 </td>
                             </tr>
                         ) : vehiculosFiltrados.length === 0 ? (
                             <tr>
-                                <td colSpan="10" className="tabla-datos-vacio">
+                                <td colSpan="9" className="tabla-datos-vacio">
                                     No existen vehículos registrados.
                                 </td>
                             </tr>
@@ -146,18 +133,17 @@ export default function ListaVehiculos() {
                                     </td>
                                     <td>{vehiculo.anio}</td>
                                     <td>{vehiculo.color}</td>
-                                    <td>{vehiculo.kilometraje}</td>
-                                    <td>{vehiculo.cliente?.nombre ?? "—"}</td>
+                                    <td>{vehiculo.kilometraje?.toLocaleString()}</td>
+                                    <td>
+                                        {vehiculo.cliente
+                                            ? `${vehiculo.cliente.nombre ?? ""} ${vehiculo.cliente.apellido ?? ""}`.trim() || "—"
+                                            : "—"}
+                                    </td>
                                     <td>{vehiculo.cliente?.telefono ?? "—"}</td>
                                     <td>
                                         {vehiculo.createdAt
-                                            ? new Date(vehiculo.createdAt).toLocaleDateString()
+                                            ? new Date(vehiculo.createdAt).toLocaleDateString("es-CO")
                                             : ""}
-                                    </td>
-                                    <td>
-                                        <Badge tono={vehiculo.activo === false ? "neutral" : "success"}>
-                                            {vehiculo.activo === false ? "Inactivo" : "Activo"}
-                                        </Badge>
                                     </td>
                                     <td>
                                         <div className="tabla-acciones">
@@ -176,17 +162,6 @@ export default function ListaVehiculos() {
                                                     onClick={() => setVehiculoParaEditar(vehiculo)}
                                                 >
                                                     Editar
-                                                </Button>
-                                            )}
-
-                                            {puedeEditar && (
-                                                <Button
-                                                    variante={vehiculo.activo === false ? "secundario" : "peligro"}
-                                                    icono={vehiculo.activo === false ? <TbUserCheck /> : <TbUserX />}
-                                                    onClick={() => alternarActivo(vehiculo)}
-                                                    disabled={procesando}
-                                                >
-                                                    {vehiculo.activo === false ? "Activar" : "Desactivar"}
                                                 </Button>
                                             )}
                                         </div>
