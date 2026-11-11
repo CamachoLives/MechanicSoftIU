@@ -1,3 +1,26 @@
+.login-volver {
+    position: fixed;
+    top: 20px;
+    left: 24px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radio-full);
+    color: var(--texto-secundario);
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.login-volver:hover {
+    color: var(--cian-neon-fuerte);
+    border-color: var(--cian-neon);
+    background: var(--glass-bg-strong);
+}
+
 .login-pantalla {
     position: relative;
     min-height: 100vh;

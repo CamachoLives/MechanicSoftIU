@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TbUser, TbLock, TbEye, TbEyeOff, TbLogin2, TbShieldCheck, TbAlertCircle, TbMotorbike } from "react-icons/tb";
+import { TbUser, TbLock, TbEye, TbEyeOff, TbLogin2, TbShieldCheck, TbAlertCircle, TbMotorbike, TbArrowLeft } from "react-icons/tb";
 import { useAuth } from "../../context/AuthContext";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
@@ -12,7 +12,7 @@ const USUARIOS_PRUEBA = [
     { usuario: "mecanico", contrasena: "mecanico123", nombre: "Jorge Ramírez", rol: "Mecánico" },
 ];
 
-export default function Login() {
+export default function Login({ onVolver }) {
     const { login } = useAuth();
 
     const [usuario, setUsuario] = useState("");
@@ -51,6 +51,12 @@ export default function Login() {
             <div className="login-blob login-blob-2" />
             <div className="login-blob login-blob-3" />
 
+            {onVolver && (
+                <button type="button" className="login-volver" onClick={onVolver}>
+                    <TbArrowLeft /> Volver al inicio
+                </button>
+            )}
+
             <div className="login-contenido">
                 <div className="login-marca">
                     <span className="login-marca-icono">
@@ -58,7 +64,7 @@ export default function Login() {
                     </span>
                     <div>
                         <h1 className="texto-glow login-marca-titulo">MechanicSoft</h1>
-                        <p className="login-marca-subtitulo">Panel de control del taller</p>
+                        <p className="login-marca-subtitulo">Acceso mecánicos</p>
                     </div>
                 </div>
 
