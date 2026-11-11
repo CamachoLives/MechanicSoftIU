@@ -8,6 +8,7 @@ import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
 import AccesoDenegado from "./components/AccesoDenegado/AccesoDenegado";
 import Login from "./pages/Login/Login";
+import ConsultaPublica from "./pages/ConsultaPublica/ConsultaPublica";
 
 import RegistroVehiculo from "./pages/RegistroVehiculo/RegistroVehiculo";
 import ListaVehiculos from "./pages/ListaVehiculos/ListaVehiculos";
@@ -20,6 +21,7 @@ function App() {
     const { usuarioActual, cargando, tienePermiso } = useAuth();
 
     const [vista, setVista] = useState(null);
+    const [mostrandoLogin, setMostrandoLogin] = useState(false);
 
     if (cargando) {
         return (
@@ -29,8 +31,12 @@ function App() {
         );
     }
 
+    // Pantalla pública por defecto; login solo si el mecánico lo solicita
     if (!usuarioActual) {
-        return <Login />;
+        if (mostrandoLogin) {
+            return <Login onVolver={() => setMostrandoLogin(false)} />;
+        }
+        return <ConsultaPublica onLoginClick={() => setMostrandoLogin(true)} />;
     }
 
     const primerItemPermitido = NAV_ITEMS.find((item) => tienePermiso(item.permiso));
