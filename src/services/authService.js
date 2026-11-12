@@ -7,7 +7,7 @@ const API = "/api/auth";
 export async function iniciarSesion(usuario, contrasena) {
     try {
         const respuesta = await api.post(`${API}/login`, { usuario, contrasena });
-        guardar("sesion", { usuarioId: respuesta.data.id });
+        guardar("sesion", { usuarioId: respuesta.data.id, token: respuesta.data.token ?? null });
         return { ok: true, usuarioId: respuesta.data.id };
     } catch (error) {
         return { ok: false, error: mensajeError(error, "No se pudo iniciar sesión.") };
